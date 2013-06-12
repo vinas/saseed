@@ -1,0 +1,405 @@
+/* GENERAL CSS */
+@font-face {
+	font-family: 'Avenir';
+	src:
+		url('/morarte/Application/View/font/12 Avenir 35 Light 02173.ttf'),
+		url('/morarte/Application/View/font/Avenir Next Condensed.ttc'),
+		url('/morarte/Application/View/font/Avenir Next.ttc'),
+		url('/morarte/Application/View/font/Avenir.ttc');
+}
+
+.body {
+	margin: 0px;
+	border: 0px;
+}
+
+.container {
+	background-image:url(/morarte/Application/View/img/bg_light_leather.jpg);
+	background-repeat: repeat;
+	width: 100%;
+	height: 100%;
+}
+
+/* MAIN MENU */
+.main_menu {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	background-color: #871D1D;
+	height: 107px;
+	width: 100%;
+}
+
+.main_menu .logo_morarte {
+	position: absolute;
+	left: 125px;
+	top: 26px;
+}
+
+.main_menu .buttons {
+	width: 664px;
+	height: 107px;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
+
+.main_menu .buttons:hover {
+	cursor: pointer;
+}
+
+.main_menu .buttons .usuario {
+	float: left;
+	width: 166px;
+	height: 107px;
+	background-color: #831C1C;
+}
+
+.main_menu .buttons .usuario .picture {
+	position: relative;
+	text-align:center;
+	top: 20px;
+}
+
+.main_menu .buttons .configuracoes {
+	float: left;
+	width: 166px;
+	height: 107px;
+	background-color: #A0352C;
+}
+
+.main_menu .buttons .configuracoes .picture {
+	position: relative;
+	text-align:center;
+	top: 21px;
+}
+
+.main_menu .buttons .orcamentos {
+	float: left;
+	width: 166px;
+	height: 107px;
+	background-color: #831C1C;
+}
+
+.main_menu .buttons .orcamentos .picture {
+	position: relative;
+	text-align:center;
+	top: 20px;
+}
+
+.main_menu .buttons .sair {
+	float: left;
+	width: 166px;
+	height: 107px;
+	background-color: #9C342B;
+}
+
+.main_menu .buttons .sair .picture {
+	position: relative;
+	text-align:center;
+	top: 20px;
+}
+
+/* LEFT MENU */
+.left_menu_on {
+	position: absolute;
+}
+
+.left_menu {
+	position: absolute;
+	top: 107px;
+	left: 0px;
+	width: 125px;
+	height: 500px;
+	background-color: #84735E;
+	opacity: 0.4;
+	filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+
+.left_button:hover {
+	cursor: pointer;
+}
+
+.portifolio {
+	position: absolute;
+	top: 147px;
+	left: 0px;
+	width: 125px;
+	height: 103px;
+}
+
+.produtos {
+	position: absolute;
+	top: 260px;
+	left: 0px;
+	width: 125px;
+	height: 103px;
+}
+
+.personalizado {
+	position: absolute;
+	top: 373px;
+	left: 0px;
+	width: 125px;
+	height: 103px;
+}
+
+.pdf {
+	position: absolute;
+	top: 486px;
+	left: 0px;
+	width: 125px;
+	height: 103px;
+}
+
+/* MAIN CONTENT */
+
+.main_content {
+	position: absolute;
+	left: 125px;
+	top: 107px;
+}
+
+.main_content .main_label {
+	position: relative;
+	left: 40px;
+	top: 30px;
+	color: #453525;
+	font-family: Avenir;
+	font-size: 22px;
+	font-weight: bold;
+}
+
+.main_text {
+	color: #453525;
+	font-family: Avenir;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.box_label {
+	position: relative;
+	left: 0px;
+	top: 0px;
+	padding-bottom: 5px;
+}
+
+/* TEXTS */
+.main_text {
+	color: #453525;
+	font-family: Avenir;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.main_title {
+	color: #453525;
+	font-family: Avenir;
+	font-size: 22px;
+	font-weight: bold;
+}
+
+
+/* CONFIGURAÇOES */
+
+.cfg_usuarios_main {
+	position: relative;
+	left: 47px;
+	top: 50px;
+}
+
+.cfg_fornecedores_main {
+	position: relative;
+	left: 484px;
+	top: -95px;
+}
+
+.cfg_produtos_main {
+	position: relative;
+	left: 47px;
+	top: -70px;
+}
+
+.cfg_precos_main {
+	position: relative;
+	left: 484px;
+	top: -215px;
+}
+
+/* BUTTONS */
+
+.bt_background_01 {
+	background-image: url(/morarte/Application/View/img/bt_background_01.gif);
+	width: 387px;
+	height: 48px;
+	padding-top: 12px;
+	background-repeat: no-repeat;
+	text-align: center;
+	font-family: Avenir;
+	font-size: 18px;
+	color: #FFFFFF;
+}
+
+.bt_background_01:hover {
+	cursor: pointer;
+}
+
+.bt_background_02 {
+	background-image: url(/morarte/Application/View/img/bt_background_02.gif);
+	width: 210px;
+	height: 48px;
+	padding-top: 12px;
+	background-repeat: no-repeat;
+	text-align: center;
+	font-family: Avenir;
+	font-size: 18px;
+	color: #FFFFFF;
+}
+
+.bt_background_02:hover {
+	cursor: pointer;
+}
+
+.bt_background_03 {
+	background-image: url(/morarte/Application/View/img/bt_background_03.gif);
+	width: 116px;
+	height: 48px;
+	padding-top: 12px;
+	background-repeat: no-repeat;
+	text-align: center;
+	font-family: Avenir;
+	font-size: 18px;
+	color: #FFFFFF;
+}
+
+.bt_background_03:hover {
+	cursor: pointer;
+}
+
+/* FORMS */
+
+.form_label_background {
+	position: relative;
+	float: left;
+	left: 27px;
+	top: 0px;
+	width: 166px;
+	height: 500px;
+	background-color: #841C1D;
+	opacity: 0.9;
+	filter: alpha(opacity=90); /* For IE8 and earlier */
+}
+
+.form_input {
+	width: 335px;
+	height: 39px;
+	border-width: 0px;
+	background-color: #DCDCD4;
+	font-family: Avenir;
+	font-size: 16px;
+	color: #000000;
+}
+
+.search_input {
+	width: 500px;
+	height: 25px;
+	border-width: 0px;
+	background-color: #DCDCD4;
+	font-family: Avenir;
+	font-size: 16px;
+	color: #000000;
+}
+
+.form_field_group {
+	position: relative;
+	float: left;
+	left: -89px;
+	top: 30px;
+}
+
+.form_field {
+	padding-top: 3px;
+	padding-bottom: 13px;
+}
+
+.form_label {
+	padding-top: 16px;
+	padding-bottom: 16px;
+	font-family: Avenir;
+	font-size: 18px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+.form_label_group {
+	position: relative;
+	float: left;
+	left: -120px;
+	top: 30px;
+	width: 116px;
+}
+
+.form_button_group {
+	position: relative;
+	left: 40px;
+}
+
+.form_return {
+	position: relative;
+	top: 30px;
+	left: 40px;
+}
+
+.list_search {
+	position: relative;
+	top: 30px;
+	left: 40px;
+	font-family: Avenir;
+	font-size: 18px;
+	font-weight: bold;
+	color: #000000;
+	padding-bottom: 5px;
+	text-align: center;
+}
+
+/* RESULT LIST */
+.list {
+	position: relative;
+	left: 40px;
+	top: 30px;
+}
+
+.list .list_header {
+	padding: 2px;
+}
+.list .list_header .list_header_item {
+	padding: 3px;
+	font-family: Avenir;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+	float: left;
+	width: 250px;
+	background-color: #841C1D;
+	color: #FFFFFF;
+}
+
+.list .list_item_line {
+	text-decoration: none;
+}
+
+.list .list_item_line:hover {
+	cursor: pointer;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.list .list_item_line .list_item {
+	padding: 3px;
+	font-family: Avenir;
+	font-size: 18px;
+	text-align: left;
+	float: left;
+	width: 250px;
+	color: #000000;
+}

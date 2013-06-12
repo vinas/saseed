@@ -1,0 +1,7 @@
+/*
+Saves a mixed object into a session by serializing it - setObject($name, $value)
+	@param string	- object's name
+	@param mixed	- object
+	@return format	- boolean/no return
+	@throws \Exception
+*/
