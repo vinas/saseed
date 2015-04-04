@@ -14,6 +14,8 @@
 
 	namespace SaSeed;
 
+	use SaSeed\URLRequest;
+
 	// Define Charset
 	header('Content-type: text/html; charset=UTF-8');
 
@@ -36,26 +38,22 @@
 	}
 
 	// Define General JSs
-	$GLOBALS['general_js']	= '<script type="text/javascript" src="/Application/Js/libs/jquery-1.7.1.min.js"></script>'.PHP_EOL;	// Se não houver, definir como vazio ''
-	$GLOBALS['general_js']	.= '<script type="text/javascript" src="/Application/Js/libs/scripts.js"></script>'.PHP_EOL;	// Se não houver, definir como vazio ''
+	$GLOBALS['general_js']	= '<script type="text/javascript" src="/Application/View/js/libs/jquery-2.1.1.min.js"></script>'.PHP_EOL;	// Se não houver, definir como vazio ''
+	$GLOBALS['general_js']	.= '<script type="text/javascript" src="/Application/View/js/scripts/scripts.js"></script>'.PHP_EOL;
 
 	// Define General CSSs
-	$GLOBALS['general_css']	= '<link href="/Application/Css/jquery.fancybox-1.3.4.css" rel="stylesheet">'.PHP_EOL;	// Se não houver, definir como vazio ''
-	$GLOBALS['general_css']	.= '<link href="/Application/Css/main_styles.css" rel="stylesheet">'.PHP_EOL;	// Se não houver, definir como vazio ''
+	$GLOBALS['general_css']	= '<link href="/Application/View/css/styles.css" rel="stylesheet">'.PHP_EOL;	// Se não houver, definir como vazio ''
 
 	// ********************************************** \\
 	//	Load Specific Controller and Action Function  \\
 	// ********************************************** \\
-
 	// Define Controller, Action and Parameters
-	$URLparams					= new URLRequest();
+	$URLparams = new URLRequest();
 	$GLOBALS['controller_name']	= $URLparams->getController();
 	$GLOBALS['controller']		= "\Application\Controller\\".$URLparams->getController();
 	$GLOBALS['action_function']	= $URLparams->getActionFunction();
-	$GLOBALS['params']			= $URLparams->getParams();
+
 
 	// Call in Controller and Functions whithin proper environment
 	$obj = new $GLOBALS['controller'];
 	$obj->$GLOBALS['action_function']();
-
-

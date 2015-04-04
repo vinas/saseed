@@ -10,10 +10,10 @@
 *				Ele deve poder ser utilizado por qualquer repositório.				*
 *																					*
 * Data da criação: 23/05/2013														*
-* Versão: 1.13.0523																	*
+* Versão: 1.15.0326																	*
 *************************************************************************************/
 
-namespace Application\Controller\Repository;
+namespace Application\Controller\Service\dbUtils;
 
 class dbFunctions {
 
@@ -27,7 +27,6 @@ class dbFunctions {
 	 * @param string	- Sentido da ordenação
 	 * @return array */
 	public function getPage($select_what = false, $table = false, $conditions = '1', $limit = 20, $pg_num = 1, $ordering = 'id', $direction = 'ASC') {
-		// Database Connection
 		$db								= $GLOBALS['db'];
 		// Inicializa variáveis
 		$return							= false;

@@ -8,7 +8,7 @@
 *					to call.														*
 *																					*
 * Creation Date:	14/11/2012														*
-* Version:			1.12.1114														*
+* Version:			1.15.0326														*
 * License:			http://www.opensource.org/licenses/bsd-license.php BSD			*
 *************************************************************************************/
 
@@ -16,74 +16,54 @@
 
 	class URLRequest {
 
-		private $params				= false;
-		private $params_position	= false;
+		private $params			= false;
+		private $paramsPosition	= false;
 
 		/*
-		Gets and defines Controller's name - getController()
+		Gets and defines Controller's name
 			@return format	- string/boolean
 		*/
 		public function getController() {
-			$controller		= false;
 			$params			= $this->getAllURLParams();
-			if (ENV == 'DEV') {
-				$controller	= $params[2];
-			} else {
-				$controller	= $params[1];
-			}
-			if (empty($controller)) {
-				$controller	= 'IndexController';
-			} else {
-				$controller	= $controller.'Controller';
-			}
+			$controller		= (ENV == 'DEV') ? $params[2] : $params[1];
+			$controller		= (empty($controller)) ? 'IndexController' :  $controller.'Controller';
 			return $controller;
 		}
 
 		/*
-		Gets and defines Action Function's name - getActionFunction()
+		Gets and defines Action Function's name
 			@return format	- string/boolean
 		*/
 		public function getActionFunction() {
-			$function		= false;
 			$params			= $this->getAllURLParams();
-			if (ENV == 'DEV') {
-				$pos		= 3;
-			} else {
-				$pos		= 2;
-			}
+			$pos = (ENV == 'DEV') ? 3 : 2;
 			if (!empty($params[$pos])) {
-				$function	= $params[$pos];
-			}else{
-				$function 	= 'index';
+				return $params[$pos];
 			}
-			return $function;
+			return 'index';
 		}
 
 		/*
-		Gets all requested parameters- getParams()
+		Gets all requested parameters
 			@return format	- array/boolean
 		*/
 		public function getParams() {
-			$sent_params		= false;
-			$params				= $this->getAllURLParams();
-			$tot_params			= count($params);
-			if (ENV == 'DEV') {
-				$start			= 3;
-			} else {
-				$start			= 2;
+			$params 	= $this->getAllURLParams();
+			$totParams	= count($params);
+			$start		= (ENV == 'DEV') ? 3 : 2;
+			for ($i = $start; $i < $totParams; $i++) {
+				$this->paramsPosition[]	= $params[$i];
 			}
-			for ($i = $start; $i < $tot_params; $i++) {
-				/*
-				if (($start - $i) % 2 == 0) {
-					$this->params[$params[$i]]	= $params[$i+1];
-				}
-				*/
-				$this->params_position[]	= $params[$i];
-			}
-			return $this->params_position;
+			return $this->paramsPosition;
 		}
 
-
+		/*
+		Gets all parameters sent by post - getPostParams()
+			@return format	- array/boolean
+		*/
+		public function getPostParams() {
+			return $_POST;
+		}
 
 		/*
 		Gets specific parameter - getParam($position)
@@ -91,14 +71,13 @@
 			@return format	- array/boolean
 		*/
 		public function getParam($position = false) {
-			$parameter			= false;
 			if ($position !== false) {
-				$params			= $this->getParams();
+				$params	= $this->getParams();
 				if ($params) {
-					$parameter	= $params[$position];
+					return $params[$position];
 				}
 			}
-			return $parameter;
+			return false;
 		}
 
 		/*
@@ -107,13 +86,12 @@
 			@return format	- string
 		*/
 		public function getQuery($name = false) {
-			$parameter			= false;
 			if ($name !== false) {
 				if (!empty($this->params[$name])) {
-					$parameter	= $this->params[$name];
+					return $this->params[$name];
 				}	
 			}
-			return $parameter;
+			return false;
 		}
 
 		/*

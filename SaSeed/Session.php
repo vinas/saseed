@@ -7,7 +7,7 @@
 * Description: 		This file declares basic session related functions.				*
 *																					*
 * Creation Date:	14/11/2012														*
-* Version:			1.12.1114														*
+* Version:			1.15.0326														*
 * License:			http://www.opensource.org/licenses/bsd-license.php BSD			*
 *************************************************************************************/
 
@@ -80,10 +80,10 @@
 			@return format	- boolean
 		*/
 		public static function setObject($name = false, $value = false) {
-			$return							= false;
+			$return = false;
 			if (($name) && ($value)) {
 				$_SESSION['objects'][$name]	= serialize($value);
-				$return						= true;
+				$return = true;
 			}
 			return $return;
 		}
@@ -99,6 +99,14 @@
 				$return	= unserialize($_SESSION['objects'][$name]);
 			}
 			return $return;
+		}
+
+		/*
+		Retrieves all session values - getAll()
+			@return format	- php session object
+		*/
+		public static function getAll() {
+			return $_SESSION;
 		}
 
 	}

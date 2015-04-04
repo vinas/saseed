@@ -8,7 +8,7 @@
 *					throughout the site.											*
 *																					*
 * Creation Date:	13/10/2011														*
-* Version:			2.12.1115														*
+* Version:			2.15.0326														*
 * License:			http://www.opensource.org/licenses/bsd-license.php BSD			*
 *************************************************************************************/
 
@@ -18,12 +18,11 @@
 		}
  		if (is_array($d)) {
 			return array_map(__FUNCTION__, $d);
-		} else {
-			return $d;
 		}
+		return $d;
 	}
 
-	/* Função que gera uma string aleatória - randomString($comprimento=8)
+	/* Função que gera uma string aleatória
 	 * @integer		- Comprimento da senha
 	 * @return string */
 	function randomString ($comprimento = 8) {
@@ -38,10 +37,10 @@
 		return $pass;
 	}
 
-	/* Função que formata a data que vai para o mysql - data_mysql($date)
+	/* Função que formata a data que vai para o mysql
 	 * @param string	- Data no formato ("2011-10-17 09:40:42" ou "2011/10/17 09:40:42")
 	 * @return string */
-	function data_mysql ($data='now') {
+	function mySqlDate ($data = 'now') {
 		// Se data não enviada
 		if ($data == 'now') {
 			// Monta data com dia de hoje
@@ -58,10 +57,10 @@
 		return $data;
 	}
 
-	/* Função que formata a data que vai para o mysql - data_bras_mysql($date)
+	/* Função que formata a data que vai para o mysql
 	 * @param string	- Data no formato ("17-10-2011 09:40:42" ou "17/10/2011 09:40:42")
 	 * @return string */
-	function data_bras_mysql ($data='now') {
+	function mySqlNonUsDate ($data = 'now') {
 		// Se data não enviada
 		if ($data == 'now') {
 			// Monta data com dia de hoje
@@ -78,10 +77,10 @@
 		return $data;
 	}
 
-	/* Função que formata a data vem do mysql e vai para o PHP - data_php($date)
+	/* Função que formata a data vem do mysql e vai para o PHP
 	 * @param string	- Data no formato ("2011-10-17 09:40:42" ou "2011/10/17 09:40:42")
 	 * @return string */
-	function data_php ($data='now') {
+	function phpDate ($data = 'now') {
 		// Se data não enviada
 		if ($data == 'now') {
 			// Monta data com dia de hoje
@@ -98,10 +97,10 @@
 		return $data;
 	}
 
-	/* Função que formata a data e hora que vem do mysql e vai para o PHP - datahora_php($date)
+	/* Função que formata a data e hora que vem do mysql e vai para o PHP
 	 * @param string	- Data no formato ("2011-10-17 09:40:42" ou "2011/10/17 09:40:42")
 	 * @return string */
-	function datahora_php ($data='now') {
+	function phpDateTime ($data = 'now') {
 		// Se data não enviada
 		if ($data == 'now') {
 			// Monta data com dia de hoje
@@ -123,10 +122,10 @@
 		return $data;
 	}
 
-	/* Função que formata a data e hora que vem do mysql e vai para o MYSQL - datahora_mysql($date)
+	/* Função que formata a data e hora que vem do mysql e vai para o MYSQL
 	 * @param string	- Data no formato ("2011-10-17 09:40:42" ou "2011/10/17 09:40:42")
 	 * @return string */
-	function datahora_mysql ($data='now') {
+	function mySqlDateTime ($data = 'now') {
 		// Se data não enviada
 		if ($data == 'now') {
 			// Monta data com dia de hoje
@@ -151,13 +150,10 @@
 	/* Função que tira caracteres ilegais, capazes de ocasionar cross-cript
 	 * @param string	- input text
 	 * @return string */
-	function no_xss ($string=false) {
+	function no_xss ($string = false) {
 		if ($string) {
-			// Inicializa variáveis
-			$strings_xss	= $GLOBALS['strings_xss'];
-			// Retira caracteres
-			$string			= str_replace($strings_xss, '', $string);
+			return str_replace($GLOBALS['strings_xss'], '', $string);
 		}
 		// Retorna valor
-		return $string;
+		return false;
 	}
