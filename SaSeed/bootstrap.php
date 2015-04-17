@@ -29,20 +29,20 @@
 	//  Include Basic Classes
 	// *********************** \\
 	
-	require_once(APP_PATH.'SaSeed/Session.php');
+	require_once(AppPath.'SaSeed/Session.php');
 	
 	// Database Connection
 	if (DB_NAME) {
 		$db	= new Database();
-		$db->DBConnection(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+		$db->DBConnection(DB_DRIVER, DB_HOST, DB_NAME, DB_USER, DB_PASS);
 	}
 
 	// Define General JSs
-	$GLOBALS['general_js']	= '<script type="text/javascript" src="/Application/View/js/libs/jquery-2.1.1.min.js"></script>'.PHP_EOL;	// Se não houver, definir como vazio ''
-	$GLOBALS['general_js']	.= '<script type="text/javascript" src="/Application/View/js/scripts/scripts.js"></script>'.PHP_EOL;
+	$GLOBALS['general_js']	= '<script type="text/javascript" src="/teste/Application/View/js/libs/jquery-2.1.1.min.js"></script>'.PHP_EOL;	// Se não houver, definir como vazio ''
+	$GLOBALS['general_js']	.= '<script type="text/javascript" src="/teste/Application/View/js/scripts/scripts.js"></script>'.PHP_EOL;
 
 	// Define General CSSs
-	$GLOBALS['general_css']	= '<link href="/Application/View/css/styles.css" rel="stylesheet">'.PHP_EOL;	// Se não houver, definir como vazio ''
+	$GLOBALS['general_css']	= '<link href="/teste/Application/View/css/styles.css" rel="stylesheet">'.PHP_EOL;	// Se não houver, definir como vazio ''
 
 	// ********************************************** \\
 	//	Load Specific Controller and Action Function  \\

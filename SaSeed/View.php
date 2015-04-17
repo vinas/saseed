@@ -2,7 +2,8 @@
 /************************************************************************************
 * Name:				View specifics													*
 * File:				Application\FramworkCore\View.php 								*
-* Author(s):		Vinas de Andrade e Leandro Menezes								*
+* Author(s):		ivonascimento <ivo@o8o.com.br>, Vinas de Andrade, 				*
+*					Raphael Pawlik e Leandro Menezes								*
 *																					*
 * Description: 		This file is a controller to interpretate and support requests.	*
 *																					*
@@ -48,7 +49,7 @@
 		private static function getRenderPath($name = false) {
 			if ($name) {
 				$name	= str_replace('_','/', $name);
-				return VIEW_PATH."{$name}.html" ;
+				return ViewPath."{$name}.html" ;
 			}
 			return false;
 		}
@@ -91,7 +92,7 @@
 			if ($name) {
 				if (!$full) {
 					$name = str_replace('_','/', $name);
-					header("Location: ?{$name}");
+					header("Location: {$name}");
 				} else {
 					header("Location: {$name}");
 				}

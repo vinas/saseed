@@ -25,9 +25,10 @@ class Index {
 		try {
 			$content .= '<div>'.PHP_EOL;
 			$content .= '	<div><b>Id:</b> ' . $user->getId() . '</div>'.PHP_EOL;
-			$content .= '	<div><b>Name:</b> ' . $user->getName() . '</div>'.PHP_EOL;
+			$content .= '	<div><b>User:</b> ' . $user->getUser() . '</div>'.PHP_EOL;
 			$content .= '	<div><b>Email:</b> ' . $user->getEmail() . '</div>'.PHP_EOL;
-			$content .= '	<div><b>Encrypted password:</b> ' . $user->getPassword() . '</div>'.PHP_EOL;
+			$content .= '	<div><b>Password:</b> ' . $user->getPassword() . '</div>'.PHP_EOL;
+			$content .= '	<div><b>Active:</b> ' . $user->getActive() . '</div>'.PHP_EOL;
 			$content .= '</div>'.PHP_EOL;
 		} catch (Exception $e) {
 			die('['.$classPath.'::getById] - '.  $e->getMessage());

@@ -14,18 +14,20 @@
 	namespace Application\Controller;
 
 	use SaSeed\View;
+	use SaSeed\Session;
 	use Application\Controller\Service\User as UserService;
 	use Application\Model\Index as ModIndex;
 
 	class IndexController {
 
 		public function __construct() {
-			// Define JSs e CSSs utilizados por este controller
-			//$GLOBALS['this_js']		= ''.PHP_EOL;	// Se não houver, definir como vazio ''
-			//$GLOBALS['this_css']	= ''.PHP_EOL;	// Se não houver, definir como vazio ''
-			// Define Menus a serem utilizados
-			//$GLOBALS['mainMenu']		= file_get_contents(APP_PATH.'Application/View/partial/mainMenu.html');
-			//$GLOBALS['rodape']		= file_get_contents(APP_PATH.'Application/View/partial/rodape_contato.html');
+			Session::start();
+			$this->testRead();
+			echo '<br><br>*-*-*-*-*-*<br>[SaASeed] - Executado: testRead()';
+			die;
+			/*if (Session::getVar('sessionKey') == null) {
+				View::redirect('Login');
+			}*/
 		}
 
 		/*
@@ -34,7 +36,7 @@
 		*/
 		public static function index() {
 			$ModIndex	= new ModIndex();
-			$data		= 'Conteúdo da home';
+			$data		= 'Tela principal';
 			$content	= $ModIndex->modelate($data);
 			View::set('content', $content);
 			View::render('index');
@@ -43,7 +45,7 @@
 		public static function testInsert() {
 			$userService = new UserService();
 
-			$userArray["name"] = "Nome teste";
+			$userArray["user"] = "Nome teste";
 			$userArray["email"] = "emailteste@teste.com";
 			$userArray["password"] = "abc123";
 
@@ -66,7 +68,7 @@
 			$userService = new UserService();
 			$ModIndex	= new ModIndex();
 			$user = $userService->getByEmail("emailteste@teste.com");
-			$user->setName("Alterado");
+			$user->setUser("Alterado");
 			$data = $userService->updateUser($user);
 			$user = $userService->getByEmail("emailteste@teste.com");
 			$content = $ModIndex->modelUser($user);

@@ -1,5 +1,5 @@
 RewriteEngine on
-RewriteBase /saseed/
+RewriteBase /
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
-RewriteRule ^(.*)$ public/index.php [L]
+RewriteRule ^(.*)$ /teste/public/index.php?bsurl=$1

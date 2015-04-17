@@ -36,17 +36,17 @@
 				// Monta conteúdo
 				$content			.= '					Page '.PHP_EOL;
 				if ($paging_info['previous']) {
-					$content		.= '					<a href="#" class="goto_page" key="'.$paging_info['previous'].'"><img src="/questionmaster/Application/View/img/arrow_left.gif" width="16" height="16" border="0" /></a>'.PHP_EOL;
+					$content		.= '					<a href="#" class="goto_page" key="'.$paging_info['previous'].'"><img src="/questionmaster/teste/Application/View/img/arrow_left.gif" width="16" height="16" border="0" /></a>'.PHP_EOL;
 				} else {
-					$content		.= '					<img src="/questionmaster/Application/View/img/pixel.gif" width="16" height="16" />'.PHP_EOL;
+					$content		.= '					<img src="/questionmaster/teste/Application/View/img/pixel.gif" width="16" height="16" />'.PHP_EOL;
 				}
 				$content			.= '					<input size="1" type="text" name="pager_num" id="pager_num" class="pager" value="'.$paging_info['pg_num'].'" /> '.PHP_EOL;
 				if ($paging_info['next']) {
-					$content		.= '					<a href="#" class="goto_page" key="'.$paging_info['next'].'"><img src="/questionmaster/Application/View/img/arrow_right.gif" width="16" height="16" border="0" /></a>'.PHP_EOL;
+					$content		.= '					<a href="#" class="goto_page" key="'.$paging_info['next'].'"><img src="/questionmaster/teste/Application/View/img/arrow_right.gif" width="16" height="16" border="0" /></a>'.PHP_EOL;
 				} else {
-					$content		.= '					<img src="/questionmaster/Application/View/img/pixel.gif" width="10" height="16" />'.PHP_EOL;
+					$content		.= '					<img src="/questionmaster/teste/Application/View/img/pixel.gif" width="10" height="16" />'.PHP_EOL;
 				}
-				$content			.= '					of<img src="/questionmaster/Application/View/img/pixel.gif" width="10" height="16" />'.$paging_info['tot_pages'].'<img src="/questionmaster/Application/View/img/pixel.gif" width="30" height="16" />|<img src="/questionmaster/Application/View/img/pixel.gif" width="30" height="16" />See'.PHP_EOL;
+				$content			.= '					of<img src="/questionmaster/teste/Application/View/img/pixel.gif" width="10" height="16" />'.$paging_info['tot_pages'].'<img src="/questionmaster/teste/Application/View/img/pixel.gif" width="30" height="16" />|<img src="/questionmaster/teste/Application/View/img/pixel.gif" width="30" height="16" />See'.PHP_EOL;
 				$content			.= '					<select name="max_actv" id="max_actv" class="pager_select">'.PHP_EOL;
 				// Opções de quantos usuários por página
 				if ($paging_info['limit'] != 0) {
@@ -77,7 +77,7 @@
 					$content		.= '						<option value="100">100&nbsp;</option>'.PHP_EOL;
 				}
 				$content			.= '					</select> '.PHP_EOL;
-				$content			.= '					per page<img src="/questionmaster/Application/View/img/pixel.gif" width="30" height="16" />|<img src="/questionmaster/Application/View/img/pixel.gif" width="30" height="16" />Total: <strong>'.$paging_info['tot_rows'].'</strong> records found'.PHP_EOL;
+				$content			.= '					per page<img src="/questionmaster/teste/Application/View/img/pixel.gif" width="30" height="16" />|<img src="/questionmaster/teste/Application/View/img/pixel.gif" width="30" height="16" />Total: <strong>'.$paging_info['tot_rows'].'</strong> records found'.PHP_EOL;
 			}
 			return $content;
 		}

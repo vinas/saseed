@@ -16,9 +16,10 @@
 	class User {
 
 		private $id;
-		private $name;
+		private $user;
 		private $email;
 		private $password;
+		private $active;
 
 		public function setId($id = false) {
 			$this->id = $id;
@@ -27,11 +28,11 @@
 			return $this->id;
 		}
 
-		public function setName($name = false) {
-			$this->name = $name;
+		public function setUser($user = false) {
+			$this->user = $user;
 		}
-		public function getName() {
-			return $this->name;
+		public function getUser() {
+			return $this->user;
 		}
 
 		public function setEmail($email = false) {
@@ -46,5 +47,12 @@
 		}
 		public function getPassword() {
 			return $this->password;
+		}
+
+		public function setActive($active = false) {
+			$this->active = $active;
+		}
+		public function getActive() {
+			return $this->active;
 		}
 	}

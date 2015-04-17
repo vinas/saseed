@@ -17,7 +17,7 @@ namespace Application\Controller\Repository;
 class User {
 
 	private $db;
-	private $table = 'tb_user';
+	private $table = 'user';
 	private $classPath = 'Application\Controller\Repository\User';
 
 	public function __construct() {
@@ -45,9 +45,10 @@ class User {
 			$this->db->insertRow(
 				$this->table,
 				array(
-					$user->getName(),
+					$user->getUser(),
 					$user->getEmail(),
-					$user->getPassword()
+					$user->getPassword(),
+					1
 				)
 			);
 			return $this->db->lastId();
@@ -64,14 +65,16 @@ class User {
 			$this->db->updateRow(
 				$this->table,
 				array(
-					'name',
+					'user',
 					'email',
-					'password'
+					'password',
+					'active'
 				),
 				array(
-					$user->getName(),
+					$user->getUser(),
 					$user->getEmail(),
-					$user->getPassword()
+					$user->getPassword(),
+					$user->getActive()
 				),
 				"id = ".$user->getId()
 			);
@@ -83,10 +86,26 @@ class User {
 	}
 
 	public function deleteUser($user) {
-		return $this->db->deleteRow($this->table, " id = " . $user->getId());
+		try {
+			return $this->deleteUserById($user->getId());
+		} catch (Exception $e) {
+			die('['.$classPath.'::deleteUser] - '.  $e->getMessage());
+		}
 	}
 
-	public function deleteUserById($userID) {
-		return $this->db->deleteRow($this->table, " id = " . $userId);
+	public function deleteUserById($userId) {
+		try {
+			return $this->db->deleteRow($this->table, " id = " . $userId);
+		} catch (Exception $e) {
+			die('['.$classPath.'::deleteUserById] - '.  $e->getMessage());
+		}
+	}
+
+	public function findUserByLogin($user, $password) {
+		try {
+			return $this->db->getRow($this->table, '*', "active = 1 AND user = '{$user}' AND password = '{$password}'");
+		} catch (Exception $e) {
+			die('['.$classPath.'::findUserByLogin] - '.  $e->getMessage());
+		}
 	}
 }

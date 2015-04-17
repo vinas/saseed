@@ -52,13 +52,18 @@ class User {
 		return $this->userRepository->deleteUser($user);
 	}
 
+	public function findUserByLogin($user, $password) {
+		return $this->populateUserObject($this->userRepository->findUserByLogin($user, $password));
+	}
+
 	private function populateUserObject($userArray) {
 		try {
 			$user = new UserEntity();
 			$user->setId((isset($userArray['id'])) ? $userArray['id'] : false);
-			$user->setName($userArray['name']);
-			$user->setEmail($userArray['email']);
-			$user->setPassword($userArray['password']);
+			$user->setUser((isset($userArray['user'])) ? $userArray['user'] : false);
+			$user->setEmail((isset($userArray['email'])) ? $userArray['email'] : false);
+			$user->setPassword((isset($userArray['password'])) ? $userArray['password'] : false);
+			$user->setActive((isset($userArray['active'])) ? $userArray['active'] : false);
 			return $user;
 		} catch (Exception $e) {
 			die('[Application\Controller\Repository\User::populateUserObject] - '.  $e->getMessage());
