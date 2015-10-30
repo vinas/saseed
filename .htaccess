@@ -2,4 +2,4 @@ RewriteEngine on
 RewriteBase /
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
-RewriteRule ^(.*)$ /teste/public/index.php?bsurl=$1
+RewriteRule ^(.*)$ /public/index.php?bsurl=$1

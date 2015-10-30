@@ -1,113 +1,91 @@
 <?php
-/************************************************************************************
-* Name:				Session Functions												*
-* File:				Application\FramworkCore\Session.php 							*
-* Author(s):		ivonascimento <ivo@o8o.com.br>, Vinas de Andrade, 				*
-*					Raphael Pawlik e Leandro Menezes								*
-*																					*
-* Description: 		This file declares basic session related methods.				*
-*																					*
-* Creation Date:	14/11/2012														*
-* Version:			1.15.0326														*
-* License:			http://www.opensource.org/licenses/bsd-license.php BSD			*
-*************************************************************************************/
+/**
+* Session Class
+*
+* This class holds basic general functions to be called
+* throughout the application.
+*
+* @author ivonascimento <ivo@o8o.com.br>
+* @author Vinas de Andrade <vinas.andrade@gmail.com>
+* @author Leandro Menezes
+* @author Raphael Pawlik
+* @since 2012/11/14
+* @version 1.15.1021
+* @license SaSeed\license.txt
+*/
 
 namespace SaSeed;
 
 Final class Session {
 
-	/*
-	Starts a session - start()
-		@return format	- no return
+	private static $classPath = 'SaSeed\Session';
+
+	/**
+	* Starts a session
 	*/
 	public static function start() {
 		session_start();
 	}
 
-	/*
-	Destroys a session - destroy()
-		@return format	- no return
+	/**
+	* Destroys a session
 	*/
 	public static function destroy() {
 		session_destroy();
 	}
 
-	/*
-	Sets a variable within a session - setVar($name, $value)
-		@param string	- variable's name
-		@param varchar	- variable's value
-		@return format	- boolean
+	/**
+	* Sets a variable within a session
+	*
+	* @param string - variable's name
+	* @param string - value
 	*/
 	public static function setVar($name = false, $value = false) {
-		$return					= false;
 		if (($name) && ($value)) {
-			$_SESSION[$name]	= $value;
-			$return				= true;
+			$_SESSION[$name] = $value;
+		} else {
+			throw new \Exception($classPath."::setVar - Not possible to set a variable.");
 		}
-		return $return;
 	}
 
-	/*
-	Retrieves some variable's value from within a session - getVar($name)
-		@param string	- variable's name
-		@return format	- varchar/false
+	/**
+	* Retrieves some variable's value from within a session
+	*
+	* @param string - variable's name
+	* @return string - value
 	*/
 	public static function getVar($name = false) {
-		$return		= false;
 		if (($name) && (array_key_exists($name, $_SESSION))) {
-			$return	= $_SESSION[$name];
+			return $_SESSION[$name];
 		}
-		return $return;
+		throw new \Exception($classPath."::getVar - Not a valid session parameter.");
 	}
 
-	/*
-	Erases a variable from within a session - unsetVar($name)
-		@param string	- variable's name
-		@return format	- varchar/false
+	/**
+	* Unset a variable from a session
+	*
+	* @param string - variable's name
+	* @return boolean
 	*/
 	public function unsetVar($name = false) {
-		$return		= false;
 		if (($name) && (array_key_exists($name, $_SESSION))) {
 			unset($_SESSION[$name]);
-			$return	= true;
 		}
-		return $return;
+		throw new \Exception($classPath."::unsetVar - Not a valid session parameter.");
 	}
 
-	/*
-	Saves a mixed object into a session by serializing it - setObject($name, $value)
-		@param string	- object's name
-		@param mixed	- object
-		@return format	- boolean
-	*/
-	public static function setObject($name = false, $value = false) {
-		$return = false;
-		if (($name) && ($value)) {
-			$_SESSION['objects'][$name]	= serialize($value);
-			$return = true;
-		}
-		return $return;
-	}
-
-	/*
-	Retrieves a mixed saved object from within a session - unsetVar($name)
-		@param string	- object's name
-		@return format	- object/false
-	*/
-	public static function getObject($name = false) {
-		$return		= false;
-		if (($name) && (isset( $_SESSION['objects'][$name]))) {
-			$return	= unserialize($_SESSION['objects'][$name]);
-		}
-		return $return;
-	}
-
-	/*
-	Retrieves all session values - getAll()
-		@return format	- php session object
+	/**
+	* Retrieves all session values
 	*/
 	public static function getAll() {
 		return $_SESSION;
+	}
+
+	/**
+	* Reset session
+	*/
+	public static function resetAll() {
+		$_SESSION = null;
 	}
 
 }

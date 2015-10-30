@@ -1,107 +1,104 @@
 <?php
-/************************************************************************************
-* Name:				URL Request														*
-* File:				SaSeed\URLRequest.php 											*
-* Author(s):		Vinas de Andrade e Leandro Menezes								*
-*																					*
-* Description: 		Contains functions that define which controller and function	*
-*					to call.														*
-*																					*
-* Creation Date:	14/11/2012														*
-* Version:			1.15.0326														*
-* License:			http://www.opensource.org/licenses/bsd-license.php BSD			*
-*************************************************************************************/
+/**
+* URL Request Class
+*
+* This class contains functions that define which controller
+* and action function are to be called.
+* It also handles data sent thru GET or POST methods.
+*
+* @author Vinas de Andrade <vinas.andrade@gmail.com>
+* @author Leandro Menezes
+* @since 2012/11/14
+* @version 1.15.1026
+* @license SaSeed\license.txt
+*/
 
-	namespace SaSeed;
+namespace SaSeed;
 
-	class URLRequest {
+class URLRequest {
 
-		private $params			= false;
-		private $paramsPosition	= false;
+	/**
+	* Gets Controller's name
+	*
+	* @return string
+	*/
+	public function getController() {
+		$params = self::getAllURLParams();
+		return (empty($params[1])) ? 'IndexController' : $params[1].'Controller';
+	}
 
-		/*
-		Gets and defines Controller's name
-			@return format	- string/boolean
-		*/
-		public function getController() {
-			$params			= $this->getAllURLParams();
-			$controller		= (ENV == 'DEV') ? $params[2] : $params[1];
-			$controller		= (empty($controller)) ? 'IndexController' :  $controller.'Controller';
-			return $controller;
-		}
+	/**
+	* Gets action Function's name
+	*
+	* @return string
+	*/
+	public function getActionFunction() {
+		$params = self::getAllURLParams();
+		return (!empty($params[2])) ? $params[2] : 'index';
+	}
 
-		/*
-		Gets and defines Action Function's name
-			@return format	- string/boolean
-		*/
-		public function getActionFunction() {
-			$params			= $this->getAllURLParams();
-			$pos = (ENV == 'DEV') ? 3 : 2;
-			if (!empty($params[$pos])) {
-				return $params[$pos];
-			}
-			return 'index';
-		}
-
-		/*
-		Gets all requested parameters
-			@return format	- array/boolean
-		*/
-		public function getParams() {
-			$params 	= $this->getAllURLParams();
-			$totParams	= count($params);
-			$start		= (ENV == 'DEV') ? 3 : 2;
-			for ($i = $start; $i < $totParams; $i++) {
-				$this->paramsPosition[]	= $params[$i];
-			}
-			return $this->paramsPosition;
-		}
-
-		/*
-		Gets all parameters sent by post - getPostParams()
-			@return format	- array/boolean
-		*/
-		public function getPostParams() {
-			return $_POST;
-		}
-
-		/*
-		Gets specific parameter - getParam($position)
-			@input integer	- value's position
-			@return format	- array/boolean
-		*/
-		public function getParam($position = false) {
-			if ($position !== false) {
-				$params	= $this->getParams();
-				if ($params) {
-					return $params[$position];
-				}
-			}
-			return false;
-		}
-
-		/*
-		Gets specific parameter - getQuery($position)
-			@input string	- value's position
-			@return format	- string
-		*/
-		public function getQuery($name = false) {
-			if ($name !== false) {
-				if (!empty($this->params[$name])) {
-					return $this->params[$name];
-				}	
-			}
-			return false;
-		}
-
-		/*
-		Gets all URL parameters- getAllParams()
-			@return format	- string
-		*/
-		public static function getAllURLParams() {
-			$uri	= $_SERVER['REQUEST_URI'];
-			$params	= explode('/', $uri);
+	/**
+	* Gets all passed parameters
+	*
+	* This method checks all SaSeed html data functions
+	* and returns the first set of data found, according to the
+	* following priority: POST > Friendly URL > GET
+	*
+	* @return array
+	*/
+	public function getParams() {
+		$params = self::getPostParams();
+		if ($params) {
 			return $params;
 		}
-
+		$params = self::getURLParams();
+		if ($params) {
+			return $params;
+		}
+		return self::getGetParams();
 	}
+
+	/**
+	* Gets all URL parameters
+	*
+	* @return array
+	*/
+	public static function getAllURLParams() {
+		return explode('/', $_SERVER['REQUEST_URI']);
+	}
+
+	/**
+	* Gets URL parameters
+	*
+	* This method gets all values contained in a friendly url
+	* excluding controller's and action function's names
+	*
+	* @return array
+	*/
+	public static function getURLParams() {
+		$urlParams = self::getAllURLParams();
+		for ($i = 3; $i < count($urlParams); $i++) {
+			$params[] = $urlParams[$i];
+		}
+		return $params;
+	}
+
+	/**
+	* Gets all parameters sent by POST method
+	*
+	* @return array
+	*/
+	private function getPostParams() {
+		return $_POST;
+	}
+
+	/**
+	* Gets all parameters sent by GET method
+	*
+	* @return array
+	*/
+	private function getGetParams() {
+		return $_GET;
+	}
+
+}
