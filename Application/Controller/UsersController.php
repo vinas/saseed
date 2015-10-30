@@ -32,7 +32,7 @@ class UsersController {
 		try {
 			View::set('user', new UserModel());
 			View::set('page', 'newUser');
-			View::render('userForm');
+			View::render('user_form');
 		} catch (Exception $e) {
 			throw('['.$this->classPath.'::newUser] - '. $e->getMessage());
 		}
@@ -42,7 +42,7 @@ class UsersController {
 		try {
 			View::set('user', new UserModel());
 			View::set('page', 'newUserJson');
-			View::render('userFormJson');
+			View::render('user_jsonForm');
 		} catch (Exception $e) {
 			throw('['.$this->classPath.'::newUserJson] - '. $e->getMessage());
 		}
@@ -50,9 +50,9 @@ class UsersController {
 
 	public function listUsers() {
 		try {
-			View::set('page', 'list');
+			View::set('page', 'listUsers');
 			View::set('users', $this->service->listUsers());
-			View::render('listUsers');
+			View::render('user_list');
 		} catch (Exception $e) {
 			throw('['.$this->classPath.'::newUser] - '. $e->getMessage());
 		}
@@ -63,7 +63,7 @@ class UsersController {
 			$mapper = new Mapper();
 			$user = $mapper->populate(new UserModel(), $this->params->getParams());
 			View::set('user', $this->service->save($user));
-			View::render('userSaved');
+			View::render('user_saved');
 		} catch (Exception $e) {
 			throw('['.$this->classPath.'::save] - '. $e->getMessage());
 		}
@@ -86,7 +86,7 @@ class UsersController {
 		try {
 			$params = $this->params->getParams();
 			View::set('user', $this->service->getUserById($params[0]));
-			View::render('userForm');
+			View::render('user_form');
 		} catch (Exception $e) {
 			throw('['.$this->classPath.'::newUser] - '. $e->getMessage());
 		}
