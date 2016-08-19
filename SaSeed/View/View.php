@@ -39,11 +39,11 @@ Final class View extends FileHandler {
 			if (self::templateFileExists($name)) {
 				require self::getTemplate($name);
 			} else {
-				throw New \Exception ("[SaSeed\View\View::render] - " . $GLOBALS['exceptions']['VIEW']['noTemplateFileInformed']);
+				throw New \Exception ("[SaSeed\View\View::render] - " . $GLOBALS['exceptions']['VIEW']['noTemplateFileInformed'] . PHP_EOL);
 			}
 			ob_end_flush();
 		} else {
-			throw New \Exception ("[SaSeed\View\View::render] - " . $GLOBALS['exceptions']['VIEW']['noTemplateFile']);
+			throw New \Exception ("[SaSeed\View\View::render] - " . $GLOBALS['exceptions']['VIEW']['noTemplateFile'] . PHP_EOL);
 		}
 	}
 
@@ -79,13 +79,13 @@ Final class View extends FileHandler {
 			if (self::templateFileExists($name)) {
 				require self::getTemplate($name);
 			} else {
-				throw New \Exception ("[SaSeed\View\View::renderTo] - " . $GLOBALS['exceptions']['VIEW']['noTemplateFileInformed']);
+				throw New \Exception ("[SaSeed\View\View::renderTo] - " . $GLOBALS['exceptions']['VIEW']['noTemplateFileInformed'] . PHP_EOL);
 			}
 			$return	= ob_get_contents();
 			ob_end_clean();
 			return $return;
 		} catch (Exception $e) {
-			throw('[SaSeed\View\View::renderTo] - Not possible to render json object');
+			throw('[SaSeed\View\View::renderTo] - Not possible to render json object' . PHP_EOL);
 		}
 	}
 

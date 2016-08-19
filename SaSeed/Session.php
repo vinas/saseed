@@ -35,46 +35,6 @@ Final class Session {
 	}
 
 	/**
-	* Sets a variable within a session
-	*
-	* @param string - variable's name
-	* @param string - value
-	*/
-	public static function setVar($name = false, $value = false) {
-		if (($name) && ($value)) {
-			$_SESSION[$name] = $value;
-		} else {
-			throw new \Exception($classPath."::setVar - Not possible to set a variable.");
-		}
-	}
-
-	/**
-	* Retrieves some variable's value from within a session
-	*
-	* @param string - variable's name
-	* @return string - value
-	*/
-	public static function getVar($name = false) {
-		if (($name) && (array_key_exists($name, $_SESSION))) {
-			return $_SESSION[$name];
-		}
-		throw new \Exception($classPath."::getVar - Not a valid session parameter.");
-	}
-
-	/**
-	* Unset a variable from a session
-	*
-	* @param string - variable's name
-	* @return boolean
-	*/
-	public function unsetVar($name = false) {
-		if (($name) && (array_key_exists($name, $_SESSION))) {
-			unset($_SESSION[$name]);
-		}
-		throw new \Exception($classPath."::unsetVar - Not a valid session parameter.");
-	}
-
-	/**
 	* Retrieves all session values
 	*/
 	public static function getAll() {
@@ -86,6 +46,46 @@ Final class Session {
 	*/
 	public static function resetAll() {
 		$_SESSION = null;
+	}
+
+	/**
+	* Sets a parameter within a session
+	*
+	* @param string - parameter's name
+	* @param string - value
+	*/
+	public  function setParam($param = false, $val = false) {
+		if (($param) && ($val)) {
+			$_SESSION[$param] = $val;
+		} else {
+			throw new \Exception('['$classPath."::setParam] - Not possible to set a parameter." . PHP_EOL);
+		}
+	}
+
+	/**
+	* Retrieves some parameter's value from within a session
+	*
+	* @param string - parameters's name
+	* @return string - value
+	*/
+	public function getParam($param = false) {
+		if (($param) && (array_key_exists($name, $_SESSION))) {
+			return $_SESSION[$param];
+		}
+		throw new \Exception('['$classPath."::getParam] - Not a valid session parameter." . PHP_EOL);
+	}
+
+	/**
+	* Unset a parameter from a session
+	*
+	* @param string - parameter's name
+	* @return boolean
+	*/
+	public function unsetParam($param = false) {
+		if (($param) && (array_key_exists($param, $_SESSION))) {
+			unset($_SESSION[$param]);
+		}
+		throw new \Exception('['$classPath."::unsetParam] - Not a valid session parameter." . PHP_EOL);
 	}
 
 }

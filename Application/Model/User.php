@@ -10,7 +10,8 @@
 
 namespace Application\Model;
 
-class User {
+class User
+{
 
 	private $id;
 	private $user;
@@ -47,10 +48,6 @@ class User {
 
 	public function setActive($active = false) {
 		$this->active = $active;
-	}
-
-	public function listProperties() {
-		return array_keys(get_object_vars($this));
 	}
 
 }

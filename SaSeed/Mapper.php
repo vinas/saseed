@@ -4,10 +4,13 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2015/10/28
-* @version 1.15.1028
+* @version 1.16.0819
 * @license SaSeed\license.txt
 */
+
 namespace SaSeed;
+
+use SaSeed\Model;
 
 class Mapper {
 
@@ -22,18 +25,20 @@ class Mapper {
 	*/
 	public function populate($obj, $array) {
 		try {
-			if (method_exists($obj, 'listProperties')) {
-				$attrs = $obj->listProperties();
-				foreach ($attrs as $attr) {
-					$method = 'set'.ucfirst($attr);
-					$obj->$method((isset($array[$attr])) ? $array[$attr] : false);
-				}
-				return $obj;
+			$attrs = $this->listProperties($obj);
+			foreach ($attrs as $attr) {
+				$method = 'set'.ucfirst($attr);
+				$obj->$method((isset($array[$attr])) ? $array[$attr] : false);
 			}
-			throw new \Exception('[SaSeed\Mapper::populate] - "listProperties" method not declared on model.');
+			return $obj;
 		} catch (Exception $e) {
-			throw('[SaSeed\Mapper::populate] - '.  $e->getMessage());
+			throw('[SaSeed\Mapper::populate] - '. $e->getMessage() . PHP_EOL);
 		}
+	}
+
+	private function listProperties($obj)
+	{
+		return array_keys(get_object_vars($model));
 	}
 
 }
