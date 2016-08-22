@@ -11,14 +11,17 @@
 namespace Application\Controller;
 
 use SaSeed\View\View;
-use SaSeed\Session;
 
-class IndexController {
+class IndexController
+{
 
-	public function __construct() {
+	public function __construct()
+	{
 	}
 
-	public static function index() {
+	public static function index()
+	{
+		View::set('page', '');
 		View::render("index");
 	}
 

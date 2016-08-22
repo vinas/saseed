@@ -25,7 +25,7 @@ class Mapper {
 	*/
 	public function populate($obj, $array) {
 		try {
-			$attrs = $this->listProperties($obj);
+			$attrs = $obj->listProperties();
 			foreach ($attrs as $attr) {
 				$method = 'set'.ucfirst($attr);
 				$obj->$method((isset($array[$attr])) ? $array[$attr] : false);
@@ -34,11 +34,6 @@ class Mapper {
 		} catch (Exception $e) {
 			throw('[SaSeed\Mapper::populate] - '. $e->getMessage() . PHP_EOL);
 		}
-	}
-
-	private function listProperties($obj)
-	{
-		return array_keys(get_object_vars($model));
 	}
 
 }

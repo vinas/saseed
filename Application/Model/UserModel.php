@@ -10,7 +10,7 @@
 
 namespace Application\Model;
 
-class User
+class UserModel
 {
 
 	private $id;
@@ -48,6 +48,13 @@ class User
 
 	public function setActive($active = false) {
 		$this->active = $active;
+	}
+	public function getActive() {
+		return $this->active;
+	}
+
+	public function listProperties() {
+		return array_keys(get_object_vars($this));
 	}
 
 }

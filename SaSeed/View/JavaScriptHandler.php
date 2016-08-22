@@ -16,7 +16,7 @@ Final class JavaScriptHandler extends FileHandler {
 	* Declare JS files contained in the lib folder
 	*/
 	public static function declareGeneralJSLibs() {
-		self::declareJSFilesFromFolder('Libs');
+		self::declareJSFilesFromFolder('libs');
 	}
 
 	/**
@@ -39,14 +39,14 @@ Final class JavaScriptHandler extends FileHandler {
 	* Loads general JS library files' content into the template
 	*/
 	public static function loadGeneralJSLibs() {
-		parent::renderFilesFromFolder(GeneralJSPath.'Libs'.DIRECTORY_SEPARATOR, 'js');
+		parent::renderFilesFromFolder(MainJsPath.'Libs'.DIRECTORY_SEPARATOR, 'js');
 	}
 
 	/**
 	* Loads general JS files' content into the template
 	*/
 	public static function loadGeneralJS() {
-		parent::renderFilesFromFolder(GeneralJSPath.'General'.DIRECTORY_SEPARATOR, 'js');
+		parent::renderFilesFromFolder(MainJsPath.'General'.DIRECTORY_SEPARATOR, 'js');
 	}
 
 	/**
@@ -55,7 +55,7 @@ Final class JavaScriptHandler extends FileHandler {
 	* @param string - folder's name
 	*/
 	private static function declareJSFilesFromFolder($folder) {
-		$files = scandir(GeneralJSPath.$folder.DIRECTORY_SEPARATOR);
+		$files = scandir(MainJsPath.$folder.DIRECTORY_SEPARATOR);
 		$totFiles = count($files);
 		if ($totFiles > 2) {
 			for ($i = 2; $i < $totFiles; $i++) {

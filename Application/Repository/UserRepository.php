@@ -9,20 +9,22 @@
 */
 namespace Application\Repository;
 
-use SaSeed\Mapper as Mapper;
-use Application\Model\User as UserModel;
+use SaSeed\Mapper;
+use Application\Model\UserModel;
 
-class User extends \SaSeed\Database\DAO {
+class UserRepository extends \SaSeed\Database\DAO {
 
 	private $db;
 	private $table = 'users';
 	private $classPath = 'Application\Repository\User';
 
-	public function __construct() {
+	public function __construct()
+	{
 		$this->db = parent::setDatabase('hostinger');
 	}
 
-	public function getById($userId = false) {
+	public function getById($userId = false)
+	{
 		try {
 			$mapper = new Mapper();
 			return $mapper->populate(
@@ -34,7 +36,8 @@ class User extends \SaSeed\Database\DAO {
 		}
 	}
 
-	public function listAll() {
+	public function listAll()
+	{
 		try {
 			$mapper = new Mapper();
 			$users = $this->db->getAllRows($this->table);
@@ -51,7 +54,8 @@ class User extends \SaSeed\Database\DAO {
 	}
 
 
-	public function getByEmail($email = false) {
+	public function getByEmail($email = false)
+	{
 		try {
 			$mapper = new Mapper();
 			return $mapper->populate(
@@ -63,7 +67,8 @@ class User extends \SaSeed\Database\DAO {
 		}
 	}
 
-	public function saveNew($user) {
+	public function saveNew($user)
+	{
 		try {
 			$this->db->insertRow(
 				$this->table,
@@ -80,7 +85,8 @@ class User extends \SaSeed\Database\DAO {
 		}
 	}
 
-	public function update($user) {
+	public function update($user)
+	{
 		try {
 			if (!$user->getId()) {
 				throw new Exception("No User Id");
@@ -106,7 +112,8 @@ class User extends \SaSeed\Database\DAO {
 		return false;
 	}
 
-	public function deleteUser($user) {
+	public function deleteUser($user)
+	{
 		try {
 			return $this->deleteUserById($user->getId());
 		} catch (Exception $e) {
@@ -114,7 +121,8 @@ class User extends \SaSeed\Database\DAO {
 		}
 	}
 
-	public function deleteUserById($userId) {
+	public function deleteUserById($userId)
+	{
 		try {
 			return $this->db->deleteRow($this->table, " id = " . $userId);
 		} catch (Exception $e) {
@@ -122,7 +130,8 @@ class User extends \SaSeed\Database\DAO {
 		}
 	}
 
-	public function findUserByLogin($user, $password) {
+	public function findUserByLogin($user, $password)
+	{
 		try {
 			return $this->db->getRow($this->table, '*', "user = '{$user}' AND password = '{$password}'");
 		} catch (Exception $e) {

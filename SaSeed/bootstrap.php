@@ -16,7 +16,7 @@ namespace SaSeed;
 use SaSeed\URLRequest;
 
 require_once('Settings.php'); // (Must be the first include)
-require_once("Autoload.php");
+require_once("autoload.php");
 
 // ********************************************** \\
 //	Load Specific Controller and Action Function  \\

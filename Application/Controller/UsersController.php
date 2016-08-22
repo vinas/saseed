@@ -13,22 +13,25 @@ namespace Application\Controller;
 use SaSeed\View\View;
 use SaSeed\URLRequest;
 
-use SaSeed\Mapper as Mapper;
-use Application\Model\User as UserModel;
-use Application\Service\User as UserService;
+use SaSeed\Mapper;
+use Application\Model\UserModel;
+use Application\Service\UserService;
 
-class UsersController {
+class UsersController
+{
 
 	private $params;
 	private $service;
 	private $classPath = "Application\Controller\UsersController";
 
-	public function __construct() {
+	public function __construct()
+	{
 		$this->params = new URLRequest();
 		$this->service = new UserService();
 	}
 
-	public function newUser() {
+	public function newUser()
+	{
 		try {
 			View::set('user', new UserModel());
 			View::set('page', 'newUser');
@@ -38,7 +41,8 @@ class UsersController {
 		}
 	}
 
-	public function newUserJson() {
+	public function newUserJson()
+	{
 		try {
 			View::set('user', new UserModel());
 			View::set('page', 'newUserJson');
@@ -48,7 +52,8 @@ class UsersController {
 		}
 	}
 
-	public function listUsers() {
+	public function listUsers()
+	{
 		try {
 			View::set('page', 'listUsers');
 			View::set('users', $this->service->listUsers());
@@ -58,10 +63,12 @@ class UsersController {
 		}
 	}
 
-	public function save() {
+	public function save()
+	{
 		try {
 			$mapper = new Mapper();
 			$user = $mapper->populate(new UserModel(), $this->params->getParams());
+			$user->setPassword(md5($user->getPassword()));
 			View::set('user', $this->service->save($user));
 			View::render('user_saved');
 		} catch (Exception $e) {
@@ -69,7 +76,8 @@ class UsersController {
 		}
 	}
 
-	public function saveJsonResponse() {
+	public function saveJsonResponse()
+	{
 		try {
 			$mapper = new Mapper();
 			$user = $mapper->populate(new UserModel(), $this->params->getParams());
@@ -82,7 +90,8 @@ class UsersController {
 		View::renderJson($response);
 	}
 
-	public function edit() {
+	public function edit()
+	{
 		try {
 			$params = $this->params->getParams();
 			View::set('user', $this->service->getUserById($params[0]));
@@ -92,7 +101,8 @@ class UsersController {
 		}
 	}
 
-	public function delete() {
+	public function delete()
+	{
 		try {
 			$params = $this->params->getParams();
 			$this->service->delete($params[0]);

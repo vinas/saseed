@@ -16,7 +16,7 @@ Final class CSSHandler extends FileHandler {
 	* Declare CSS files contained in the general css folder
 	*/
 	public static function declareGeneralCSS() {
-		$files = scandir(GeneralCSSPath);
+		$files = scandir(MainCssPath);
 		$totFiles = count($files);
 		if ($totFiles > 2) {
 			for ($i = 2; $i < $totFiles; $i++) {

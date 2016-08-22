@@ -10,17 +10,19 @@
 
 namespace Application\Service;
 
-use Application\Repository\User as UserRepository;
+use Application\Repository\UserRepository;
 
-class User {
+class UserService {
 
 	private $repository;
 
-	public function __construct() {
+	public function __construct()
+	{
 		$this->repository = new UserRepository();
 	}
 
-	public function save($user) {
+	public function save($user)
+	{
 		if ($user->getId() > 0) {
 			$this->repository->update($user);
 		} else {
@@ -29,7 +31,8 @@ class User {
 		return $user;
 	}
 
-	public function listUsers() {
+	public function listUsers()
+	{
 		try {
 			return $this->repository->listAll();
 		} catch (Exception $e) {
@@ -37,7 +40,8 @@ class User {
 		}
 	}
 
-	public function getUserById($userId) {
+	public function getUserById($userId)
+	{
 		try {
 			return $this->repository->getById($userId);
 		} catch (Exception $e) {
@@ -45,7 +49,8 @@ class User {
 		}
 	}
 
-	public function delete($userId) {
+	public function delete($userId)
+	{
 		try {
 			return $this->repository->deleteUserById($userId);
 		} catch (Exception $e) {
