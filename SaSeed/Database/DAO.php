@@ -6,16 +6,18 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2015/09/02
-* @version 1.15.0902
+* @version 1.16.1025
 * @license SaSeed\license.txt
 */
 
 namespace SaSeed\Database;
 
 use SaSeed\Database\Database;
-use SaSeed\Database\Pagination;
+use SaSeed\Database\QueryBuilder;
 
-class DAO {
+
+class DAO
+{
 
 	/**
 	* Set and connect to Database
@@ -24,10 +26,11 @@ class DAO {
 	*
 	* @param string - database name
 	*/
-	public function setDatabase($dbName) {
-		$settings = parse_ini_file(ConfigPath.'database.ini', true);
+	public function setDatabase($dbName)
+	{
+		$settings = parse_ini_file(SettingsPath.'database.ini', true);
 		$db	= new Database();
-		$db->DBConnection(
+		$db->connect(
 			$settings[$dbName]['driver'],
 			$settings[$dbName]['host'],
 			$settings[$dbName]['dbname'],
@@ -36,5 +39,11 @@ class DAO {
 		);
 		return $db;
 	}
+
+	public function setQueryBuilder()
+	{
+		return new QueryBuilder();
+	}
+
 
 }

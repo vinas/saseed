@@ -1,5 +1,0 @@
-RewriteEngine on
-RewriteBase /
-RewriteCond %{SCRIPT_FILENAME} !-f
-RewriteCond %{SCRIPT_FILENAME} !-d
-RewriteRule ^(.*)$ /public/index.php?bsurl=$1

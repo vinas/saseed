@@ -4,58 +4,126 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2015/10/26
-* @version 1.15.1026
+* @version 1.16.1026
 * @license SaSeed\license.txt
 */
 
 namespace Application\Service;
 
-use Application\Repository\UserRepository;
+use SaSeed\Handlers\Exceptions;
+use SaSeed\Handlers\Mapper;
+
+use Application\Factory\UserFactory;
+use Application\Service\ResponseHandlerService;
+use Application\Model\UserResponseModel;
+use Application\Model\UsersListResponseModel;
 
 class UserService {
 
-	private $repository;
+	private $factory;
 
 	public function __construct()
 	{
-		$this->repository = new UserRepository();
+		$this->factory = new UserFactory();
 	}
 
 	public function save($user)
 	{
-		if ($user->getId() > 0) {
-			$this->repository->update($user);
-		} else {
-			$user = $this->repository->saveNew($user);
+		$responseHandler = new ResponseHandlerService();
+		$mapper = new Mapper();
+		$res = new UserResponseModel();
+		try {
+			if ($this->isUserValid($user)) {
+				$user->setPassword($this->encrypt($user->getPassword()));
+				if ($user->getId() > 0) {
+					$this->factory->update($user);
+				} else {
+					$user = $this->factory->saveNew($user);
+				}
+				$res = $mapper->populate(
+						$res,
+						$user
+					);
+				$res = $responseHandler->handleResponse($res, 200);
+			} else {
+				$res = $responseHandler->handleResponse($res, 100);
+			}
+		} catch (Exception $e) {
+			Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
+			$res = $responseHandler->handleResponse($res, 101);
+		} finally {
+			return $res;
 		}
-		return $user;
 	}
 
 	public function listUsers()
 	{
+		$res = [];
 		try {
-			return $this->repository->listAll();
+			$mapper = new Mapper();
+			$users = $this->factory->listAll();
+			foreach ($users as $user) {
+				$res[] = $mapper->populate(new UsersListResponseModel(), $user);
+			}
 		} catch (Exception $e) {
-			throw('['.$this->classPath.'::listUsers] - '.  $e->getMessage());
+			Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
+		} finally {
+			return $res;
 		}
 	}
 
-	public function getUserById($userId)
+	public function getUserById($userId = false)
 	{
+		$responseHandler = new ResponseHandlerService();
+		$mapper = new Mapper();
+		$res = new UserResponseModel();
 		try {
-			return $this->repository->getById($userId);
+			if ($userId) {
+				$user = $this->factory->getById($userId);
+				if ($user->getId() > 0 && is_numeric($user->getId())) {
+					$res = $mapper->populate(
+							$res,
+							$user
+						);
+					$res = $responseHandler->handleResponse($res, 201);
+				} else {
+					$res = $responseHandler->handleResponse($res, 102);
+				}
+			} else {
+				$res = $responseHandler->handleResponse($res, 103);
+			}
 		} catch (Exception $e) {
-			throw('['.$this->classPath.'::getUserById] - '.  $e->getMessage());
+			Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
+			$res = $responseHandler->handleResponse($res, 102);
+		} finally {
+			return $res;
 		}
 	}
 
 	public function delete($userId)
 	{
 		try {
-			return $this->repository->deleteUserById($userId);
+			$this->factory->deleteUserById($userId);
 		} catch (Exception $e) {
-			throw('['.$this->classPath.'::delete] - '.  $e->getMessage());
+			Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
 		}
+	}
+
+	private function isUserValid($user)
+	{
+		if (strlen($user->getUser()) < 1) {
+			return false;
+		} else if (strlen($user->getEmail()) < 1) {
+			return false;
+		} else if (strlen($user->getPassword()) < 1) {
+			return false;
+		}
+		return true;
+	}
+
+	private function encrypt($txt)
+	{
+		return md5($txt);
 	}
 
 }

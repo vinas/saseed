@@ -1,22 +1,21 @@
 <?php
 /**
-* User Model
+* Response User Model for List
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
-* @since 2015/10/26
-* @version 1.15.1026
+* @since 2016/10/26
+* @version 1.16.1026
 * @license SaSeed\license.txt
 */ 
 
 namespace Application\Model;
 
-class UserModel implements \JsonSerializable
+class UsersListResponseModel implements \JsonSerializable
 {
 
 	private $id;
 	private $user;
 	private $email;
-	private $password;
 
 	public function setId($id = false) {
 		$this->id = $id;
@@ -37,13 +36,6 @@ class UserModel implements \JsonSerializable
 	}
 	public function getEmail() {
 		return $this->email;
-	}
-
-	public function setPassword($password = false) {
-		$this->password = $password;
-	}
-	public function getPassword() {
-		return $this->password;
 	}
 
 	public function listProperties() {

@@ -1,0 +1,40 @@
+.menu {
+	background-color: #990000;
+	width: 70%;
+	height: 30px;
+	padding: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+	font-weight: bold;
+}
+
+.menu .item {
+	color: #FFF;
+	float: left;
+	margin-left: 5px;
+	margin-right: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	text-decoration: none;
+}
+
+.menu .clickedItem {
+	color: #FFF;
+	float: left;
+	margin-left: 5px;
+	margin-right: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	text-decoration: none;
+	background-color: #5D0000;
+}
+
+.menu .item:hover {
+	cursor: pointer;
+	background-color: #5D0000;
+}

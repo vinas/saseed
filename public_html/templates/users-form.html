@@ -1,0 +1,11 @@
+<form method="post" class="form">
+	<input type="hidden" name="id" id="id" ng-model="user.id" value="{{user.id}}" />
+	user: <input type="text" name="user" id="user" ng-model="user.user" value="{{user.user}}" /><br/>
+	email: <input type="text" name="email" id="email" ng-model="user.email" value="{{user.email}}" /><br/>
+	type new password: <input type="password1" name="password1" id="password1" ng-model="user.password1" /><br/>
+	repeat new password: <input type="password2" name="password2" id="password2" ng-model="user.password2" /><br/>
+	<br/>
+	<button ng-click="save()">Save</button>
+</form>
+
+<a ng-href="#/users" >voltar</a>

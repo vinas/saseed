@@ -1,0 +1,23 @@
+<a ng-href="#/users/new">new user</a>
+<br/><br/>
+<span>filter: </span><input type="text" ng-model="q" />
+<br/><br/>
+<b>List of users</b>
+<br/>
+<table border="1" cellpassing="0" cellspacing="0">
+<tbody>
+	<tr>
+		<td><b>id</b></td>
+		<td><b>user</b></td>
+		<td><b>email</b></td>
+		<td></td>
+	</tr>
+	<tr ng-repeat="user in users| filter: q | orderBy: 'user'">
+
+		<td ng-click="goEditUser(user.id)" ng-style="style" ng-mouseover="style={'cursor': 'pointer'}" ng-mouseleave="style={'cursor': 'default'}">{{user.id}}</td>
+		<td ng-click="goEditUser(user.id)" ng-style="style" ng-mouseover="style={'cursor': 'pointer'}" ng-mouseleave="style={'cursor': 'default'}">{{user.user}}</td>
+		<td ng-click="goEditUser(user.id)" ng-style="style" ng-mouseover="style={'cursor': 'pointer'}" ng-mouseleave="style={'cursor': 'default'}">{{user.email}}</td>
+		<td ng-click="delete(user.id)" ng-style="style" ng-mouseover="style={'cursor': 'pointer'}" ng-mouseleave="style={'cursor': 'default'}">delete</td>
+	</tr>
+</tbody>
+</table>

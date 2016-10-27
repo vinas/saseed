@@ -1,0 +1,21 @@
+<html>
+<head>
+	<base href="/">
+	<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="js/angular.min.js"></script>
+	<script type="text/javascript" src="js/angular-route.min.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
+	<script type="text/javascript" src="js/controllers/home-controller.js"></script>
+	<script type="text/javascript" src="js/controllers/users-controller.js"></script>
+	<script type="text/javascript" src="js/services/users-service.js"></script>
+	<script type="text/javascript" src="js/factories/users-factory.js"></script>
+
+	<link href="css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+	<div class="container" ng-app="app">
+		<header ng-include="'templates/menu.html'"></header>
+		<div ng-view></div>
+	</div>
+</body>
+</html>

@@ -1,20 +1,23 @@
 <?php
 /**
-* Index Controller Class
+* Users Controller Class
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2015/10/26
-* @version 1.15.1026
+* @version 1.16.1026
 * @license SaSeed\license.txt
 */
 
 namespace Application\Controller;
 
-use SaSeed\View\View;
-use SaSeed\URLRequest;
+use SaSeed\Output\View;
+use SaSeed\Handlers\Request;
+use SaSeed\Handlers\Exceptions;
+use SaSeed\Handlers\Mapper;
 
-use SaSeed\Mapper;
 use Application\Model\UserModel;
+use Application\Model\UserResponseModel;
+use Application\Service\ResponseHandlerService;
 use Application\Service\UserService;
 
 class UsersController
@@ -22,93 +25,66 @@ class UsersController
 
 	private $params;
 	private $service;
-	private $classPath = "Application\Controller\UsersController";
 
 	public function __construct()
 	{
-		$this->params = new URLRequest();
+		$this->params = new Request();
 		$this->service = new UserService();
-	}
-
-	public function newUser()
-	{
-		try {
-			View::set('user', new UserModel());
-			View::set('page', 'newUser');
-			View::render('user_form');
-		} catch (Exception $e) {
-			throw('['.$this->classPath.'::newUser] - '. $e->getMessage());
-		}
-	}
-
-	public function newUserJson()
-	{
-		try {
-			View::set('user', new UserModel());
-			View::set('page', 'newUserJson');
-			View::render('user_jsonForm');
-		} catch (Exception $e) {
-			throw('['.$this->classPath.'::newUserJson] - '. $e->getMessage());
-		}
 	}
 
 	public function listUsers()
 	{
+		$res = [];
 		try {
-			View::set('page', 'listUsers');
-			View::set('users', $this->service->listUsers());
-			View::render('user_list');
+			$res = $this->service->listUsers();
 		} catch (Exception $e) {
-			throw('['.$this->classPath.'::newUser] - '. $e->getMessage());
+			Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
+		} finally {
+			View::renderJson($res);
+		}
+	}
+
+	public function getUser()
+	{
+		$responseHandler = new ResponseHandlerService();
+		$res = $responseHandler->handleResponse(new UserResponseModel());
+		try {
+			$params = $this->params->getParams();
+			$res = $this->service->getUserById($params[0]);
+		} catch (Exception $e) {
+			Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
+		} finally {
+			View::renderJson($res);
 		}
 	}
 
 	public function save()
 	{
+		$responseHandler = new ResponseHandlerService();
+		$res = $responseHandler->handleResponse(new UserResponseModel());
 		try {
 			$mapper = new Mapper();
 			$user = $mapper->populate(new UserModel(), $this->params->getParams());
-			$user->setPassword(md5($user->getPassword()));
-			View::set('user', $this->service->save($user));
-			View::render('user_saved');
+			$res = $this->service->save($user);
 		} catch (Exception $e) {
-			throw('['.$this->classPath.'::save] - '. $e->getMessage());
-		}
-	}
-
-	public function saveJsonResponse()
-	{
-		try {
-			$mapper = new Mapper();
-			$user = $mapper->populate(new UserModel(), $this->params->getParams());
-			$this->service->save($user);
-			$response['message'] = "User saved!";
-		} catch (Exception $e) {
-			throw('['.$this->classPath.'::saveJsonResponse] - '. $e->getMessage());
-			$response['message'] = "User not saved!";
-		}
-		View::renderJson($response);
-	}
-
-	public function edit()
-	{
-		try {
-			$params = $this->params->getParams();
-			View::set('user', $this->service->getUserById($params[0]));
-			View::render('user_form');
-		} catch (Exception $e) {
-			throw('['.$this->classPath.'::newUser] - '. $e->getMessage());
+			Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
+		} finally {
+			View::renderJson($res);
 		}
 	}
 
 	public function delete()
 	{
+		$responseHandler = new ResponseHandlerService();
+		$res = $responseHandler->handleResponse(new UserResponseModel());
 		try {
 			$params = $this->params->getParams();
 			$this->service->delete($params[0]);
-			View::redirect('/Users/listUsers', true);
+			$res = $responseHandler->handleResponse($res, 202);
 		} catch (Exception $e) {
-			throw('['.$this->classPath.'::delete] - '. $e->getMessage());
+			Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
+		} finally {
+			View::renderJson($res);
 		}
 	}
 }
