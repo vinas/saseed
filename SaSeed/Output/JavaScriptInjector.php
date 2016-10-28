@@ -10,7 +10,7 @@
 
 namespace SaSeed\Output;
 
-Final class JavaScriptHandler extends FileHandler
+Final class JavaScriptInjector extends \SaSeed\Handlers\File
 {
 
 	/**

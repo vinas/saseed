@@ -1,0 +1,33 @@
+body {
+	padding-top: 3.3rem;
+    font-family: Verdana;
+    font-size: 0.9rem;
+}
+
+.navbar-brand {
+    font-size: 2rem;
+}
+.container {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.bottom-item {
+    padding-right: 0.8rem;
+    float: right;
+}
+
+.forceCenter {
+    display: block;
+    margin: auto;
+}
+
+.forceLeft {
+    display: block;
+    float: left;
+}
+
+.forceRight {
+    display: block;
+    float: right;
+}

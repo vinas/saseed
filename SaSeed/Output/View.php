@@ -16,15 +16,15 @@
 namespace SaSeed\Output;
 
 use SaSeed\Handlers\Exceptions;
-use SaSeed\Output\JavaScriptHandler;
-use SaSeed\Output\CSSHandler;
+use SaSeed\Output\JavaScriptInjector;
+use SaSeed\Output\CSSInjector;
 
-Final class View extends FileHandler
+Final class View extends \SaSeed\Handlers\File
 {
 
 	public static $data	= Array();
-	public static $JSHandler;
-	public static $CSSHandler;
+	public static $JSInjector;
+	public static $CSSInjector;
 
 	/**
 	* Renders a template
@@ -34,8 +34,8 @@ Final class View extends FileHandler
 	public static function render($name)
 	{
 		if ($name) {
-			self::$JSHandler = new JavaScriptHandler();
-			self::$CSSHandler = new CSSHandler();
+			self::$JSInjector = new JavaScriptInjector();
+			self::$CSSInjector = new CSSInjector();
 			if (self::templateFileExists($name)) {
 				ob_start();
 				extract(self::$data);

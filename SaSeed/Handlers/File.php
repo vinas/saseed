@@ -10,7 +10,7 @@
 
 namespace SaSeed\Output;
 
-class FileHandler
+class File
 {
 
 	/**

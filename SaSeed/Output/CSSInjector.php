@@ -10,7 +10,7 @@
 
 namespace SaSeed\Output;
 
-Final class CSSHandler extends FileHandler
+Final class CSSInjector extends \SaSeed\Handlers\File
 {
 
 	/**
