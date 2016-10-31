@@ -18,6 +18,7 @@ define('WebImgViewPath', 'img/');
 // LOCAL ROUTES
 $path = dirname(__FILE__);
 $basePath = substr($path, 0, strpos($path, 'SaSeed'));
+define('BasePath', $basePath);
 define('SettingsPath', $basePath.'SaSeed'.DIRECTORY_SEPARATOR.'Settings'.DIRECTORY_SEPARATOR);
 define('ViewPath', $basePath.'public_html'.DIRECTORY_SEPARATOR);
 define('ImgPath', ViewPath.'img'.DIRECTORY_SEPARATOR);

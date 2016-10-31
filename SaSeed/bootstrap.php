@@ -24,6 +24,6 @@ use SaSeed\Handlers\Requests;
 
 $Requests = new Requests();
 $controller = "\Application\Controller\\".$Requests->getController();
-$actionFunction	= $Requests->getActionFunction();
+$actionMethod	= $Requests->getActionFunction();
 $obj = new $controller;
-$obj->$actionFunction();
+$obj->$actionMethod();

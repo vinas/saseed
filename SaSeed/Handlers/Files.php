@@ -10,8 +10,94 @@
 
 namespace SaSeed\Output;
 
+use SaSeed\Handlers\Exceptions;
+
 class Files
 {
+
+	public static function txtToArray($file)
+	{
+		return $this->fileToArray($file);
+	}
+
+	public static function iniToArray($file)
+	{
+		try {
+			if (($folder) && $folder != '') {
+				return parse_ini_file(BasePath.parent::setFilePath($file), true);
+			}
+			Exceptions::throwNew(
+				__CLASS__,
+				__FUNCTION__,
+				'Forder not informed.'
+			);
+			return false;
+		} catch (Exception $e) {
+			Exceptions::throwing(
+				__CLASS__,
+				__FUNCTION__,
+				'File could not be loaded.'
+			);
+			return false;
+		}
+	}
+
+	public static function fileToArray($file)
+	{
+		try {
+			if (($folder) && $folder != '') {
+				return file(BasePath.parent::setFilePath($file));
+			}
+			Exceptions::throwNew(
+				__CLASS__,
+				__FUNCTION__,
+				'Forder not informed.'
+			);
+			return false;
+		} catch (Exception $e) {
+			Exceptions::throwing(
+				__CLASS__,
+				__FUNCTION__,
+				'File could not be loaded.'
+			);
+			return false;
+		}
+	}
+
+	public static function xmlToArray($file)
+	{
+		try {
+			$xml = simplexml_load_string(
+					file_get_contents(parent::setFilePath($file)),
+					'SimpleXMLElement',
+					LIBXML_NOCDATA
+				);
+			return json_decode(json_encode($xml), TRUE);
+		} catch (Exception $e) {
+			Exceptions::throwing(
+				__CLASS__,
+				__FUNCTION__,
+				'File could not be loaded.'
+			);
+			return false;
+		}
+	}
+
+	public static function xmlToObject($file)
+	{
+		try {
+			return simplexml_load_string(
+					file_get_contents(parent::setFilePath($file))
+				);
+		} catch (Exception $e) {
+			Exceptions::throwing(
+				__CLASS__,
+				__FUNCTION__,
+				'File could not be loaded.'
+			);
+			return false;
+		}
+	}
 
 	/**
 	* Get all files' names in a folder given folder. The second
@@ -23,21 +109,28 @@ class Files
 	*/
 	public static function getFilesFromFolder($folder, $ext = false)
 	{
-		$files = scandir($folder);
-		if (count($files) > 2) {
-			if ($ext) {
-				$res = [];
-				for ($i = 0; $i < count($files); $i++) {
-					$pathInfo = pathinfo($folder.$files[$i]);
-					if ($pathInfo['extension'] == $ext)
-						$res[] = $files[$i];
+		if (($folder) && $folder != '') {
+			$files = scandir($folder);
+			if (count($files) > 2) {
+				if ($ext) {
+					$res = [];
+					for ($i = 0; $i < count($files); $i++) {
+						$pathInfo = pathinfo($folder.$files[$i]);
+						if ($pathInfo['extension'] == $ext)
+							$res[] = $files[$i];
+					}
+					return $res;
 				}
-				return $res;
+				unset($files[0]);
+				unset($files[1]);
+				return array_slice($files, 2);
 			}
-			unset($files[0]);
-			unset($files[1]);
-			return array_slice($files, 2);
 		}
+		Exceptions::throwNew(
+			__CLASS__,
+			__FUNCTION__,
+			'Forder not informed.'
+		);
 		return false;
 	}
 
