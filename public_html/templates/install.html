@@ -1,9 +1,51 @@
 <div style="text-align: justify;">
-    <b>Install</b><br/>
+    <b>Installation</b><br/>
     <br/>
-    Once you have downloaded SaSeed, it's time to put it in a place where you can have it up running.<br/>
+    SaSeed is super easy and fast to install. You don't need to be an expert or anything like it. =)<br/>
     <br/>
-    First things first: Are you using <a ng-href="#/install/windows">Windows</a> or <a ng-href="#/install/linux">Linux</a>?
-    <br/><br/>
+    There is however one thing you should understand about it's basic structure: SaSeed is designed to keep both the framework's and your application's files out of the server's public folder.<br/>
+    <br/>
+    The goal of doing this is to prevent your files to be directly accessed (and thus downloaded). It's a security measure to protect sensitive information those files should contain, such as database information and passwords.<br/>
+    <br/>
+    That said, it's time to see how it is structured.<br/>
+    <br/>
+    SaSeed's basic package contains 3 main folders:<br/>
+    <br/>
+    <ul>
+        <li><b>Application</b></li>
+        <li><b>public_html</b></li>
+        <li><b>SaSeed</b></li>
+    </ul>
+    Both <i>Application</i> and <i>SaSeed</i> are at the same level as the public folder, which is the context root folder, the one accessed through a URL request.<br/>
+    <br/>
+    <div class="example"><b>Example:</b> when accessing <i>http://saseed.pe.hu/</i>, the user will be accessing <i>public_html/index.html</i>.</div>
+    <br/>
+    For this tutorial, we are supposing you are working in a Windows environment and have already downloaded <a ng-href="https://www.apachefriends.org/download.html" target="_blank">XAMPP</a>. If you haven't go ahead and <a ng-href="https://www.apachefriends.org/download.html" target="_blank">do it now</a>. XAMPP is a great easy-to-use apache server that will do everything you need.<br/>
+    <br>
+    If you are running Linux or using a different server, chances are that have a bit more experience and will need very little explanation, so keep following these instructions and you'll understand what you have to do to have it set. ;)<br/>
+    <br/>
+    Once installed, the default folder for XAMPP is <i>C:\xampp\</i>. It's context root folder will then be <i>C:\xampp\htdocs\</i>.<br/>
+    <br/>
+    Inside <i>htdocs</i> we are going to create our application folder. Let's name it 'myApp'.<br/>
+    <br/>
+    <ul><li><i>C:\xampp\myApp\</i></li></ul>
+    <br/>
+    Once that is done, we should copy the 3 main folders to <i>C:\xampp\myApp\</i>. After copying them, we shall have the main folders at the following addresses:<br/>
+    <br/>
+    <ul>
+        <li><i>C:\xampp\myApp\Application</i></li>
+        <li><i>C:\xampp\myApp\public_html</i></li>
+        <li><i>C:\xampp\myApp\SaSeed</i></li>
+    </ul>
+    And... That's basically it. You have installed it!! =D<br/>
+    <br/>
+    But don't get to excited yet! Although it is already installed, it is still not working, for it cannot be accessed through an URL request. If you start you server, you'll notice that when you access <i>http://localhost/</i>, the folder <i>C:\xampp\htdocs</i> is being considered the document root.<br/>
+    <br/>
+    To change that we will need to <a ng-href="#/install/xampp-doc-root">change XAMPP's document root</a>.<br/>
+    <br/>
+    THEN it will be ready! =)<br/>
+    <br/>
+    Test URL: <a ng-href="http://localhost/Demo/helloWorld">http://localhost/Demo/helloWorld</a>
+    <br/>
     <img src="img/saci01.jpg" class="forceRight" />
 </div>

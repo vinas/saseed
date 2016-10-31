@@ -23,6 +23,9 @@ var app = angular.module('saSeed', ['ngRoute'])
 			.when('/install/windows', {
 				templateUrl: 'templates/install-windows.html'
 			})
+			.when('/install/xampp-doc-root', {
+				templateUrl: 'templates/xampp-doc-root.html'
+			})
 			.when('/documentation', {
 				templateUrl: 'templates/documentation.html'
 			})

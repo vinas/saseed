@@ -31,3 +31,11 @@ body {
     display: block;
     float: right;
 }
+
+.example {
+    display: block;
+    margin: auto;
+    width: 85%;
+    background-color: #FFFFCC;
+    padding: 0.8rem;
+}

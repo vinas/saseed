@@ -8,7 +8,7 @@
 * @license SaSeed\license.txt
 */
 
-namespace SaSeed\Output;
+namespace SaSeed\Handlers;
 
 use SaSeed\Handlers\Exceptions;
 
