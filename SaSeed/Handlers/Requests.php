@@ -1,6 +1,6 @@
 <?php
 /**
-* URL Request Class
+* URL Requests Class
 *
 * This class contains functions that define which controller
 * and action function are to be called.
@@ -9,13 +9,13 @@
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @author Leandro Menezes
 * @since 2012/11/14
-* @version 1.16.1027
+* @version 1.16.1031
 * @license SaSeed\license.txt
 */
 
 namespace SaSeed\Handlers;
 
-class Request
+class Requests
 {
 
 	/**

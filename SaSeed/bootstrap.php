@@ -7,7 +7,7 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2012/11/15
-* @version 1.16.1027
+* @version 1.16.1031
 * @license SaSeed\license.txt
 */
 
@@ -20,10 +20,10 @@ header('Access-Control-Allow-Credentials: true');
 require_once('Settings'.DIRECTORY_SEPARATOR.'GeneralSettings.php'); // (Must be the first include)
 require_once("autoload.php");
 
-use SaSeed\Handlers\Request;
+use SaSeed\Handlers\Requests;
 
-$Request = new Request();
-$controller = "\Application\Controller\\".$Request->getController();
-$actionFunction	= $Request->getActionFunction();
+$Requests = new Requests();
+$controller = "\Application\Controller\\".$Requests->getController();
+$actionFunction	= $Requests->getActionFunction();
 $obj = new $controller;
 $obj->$actionFunction();

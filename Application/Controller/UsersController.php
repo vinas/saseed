@@ -4,14 +4,14 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2015/10/26
-* @version 1.16.1026
+* @version 1.16.1031
 * @license SaSeed\license.txt
 */
 
 namespace Application\Controller;
 
 use SaSeed\Output\View;
-use SaSeed\Handlers\Request;
+use SaSeed\Handlers\Requests;
 use SaSeed\Handlers\Exceptions;
 use SaSeed\Handlers\Mapper;
 
@@ -28,7 +28,7 @@ class UsersController
 
 	public function __construct()
 	{
-		$this->params = new Request();
+		$this->params = new Requests();
 		$this->service = new UserService();
 	}
 

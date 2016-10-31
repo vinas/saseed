@@ -4,76 +4,42 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2015/10/21
-* @version 1.16.1026
+* @version 2.16.1031
 * @license SaSeed\license.txt
 */
 
 namespace SaSeed\Output;
 
-Final class JavaScriptInjector extends \SaSeed\Handlers\File
+Final class JavaScriptInjector extends \SaSeed\Handlers\Files
 {
 
-	/**
-	* Declare JS files contained in the lib folder
-	*/
-	public static function declareGeneralJSLibs()
+	public static function declareGeneral()
 	{
-		self::declareJSFilesFromFolder('libs');
+		self::declareFilesInFolder('general');
 	}
 
-	/**
-	* Declare JS files contained in the general folder
-	*/
-	public static function declareGeneralJS()
+	public static function declareLibs()
 	{
-		self::declareJSFilesFromFolder('general');
+		self::declareFilesInFolder('libs');
 	}
 
-	/**
-	* Declare an specific JS
-	*
-	* @param string - file name
-	*/
-	public static function declareSpecificJS($file)
+	public static function declareFilesInFolder($folder)
 	{
-		echo self::setJSTag(parent::setFilePath($file).'.js');
-	}
-
-	/**
-	* Loads general JS library files' content into the template
-	*/
-	public static function loadGeneralJSLibs()
-	{
-		parent::renderFilesFromFolder(MainJsPath.'libs'.DIRECTORY_SEPARATOR, 'js');
-	}
-
-	/**
-	* Loads general JS files' content into the template
-	*/
-	public static function loadGeneralJS()
-	{
-		parent::renderFilesFromFolder(MainJsPath.'general'.DIRECTORY_SEPARATOR, 'js');
-	}
-
-	/**
-	* Declare all JS files contained in given Js folder
-	*
-	* @param string - folder's name
-	*/
-	public static function declareJSFilesFromFolder($folder)
-	{
-		$files = scandir(MainJsPath.$folder.DIRECTORY_SEPARATOR);
-		$totFiles = count($files);
-		if ($totFiles > 2) {
-			for ($i = 2; $i < $totFiles; $i++) {
-				echo self::setJSTag($folder.'/'.$files[$i]);
+		$files = parent::getFilesFromFolder(MainJsPath.$folder.DIRECTORY_SEPARATOR, 'js');
+		if ($files) {
+			foreach ($files as $file) {
+				echo self::setTag($folder.'/'.$file);
 			}
 		}
 	}
 
-	private static function setJSTag($fileName)
+	public static function declareSpecific($file)
+	{
+		echo self::setTag(parent::setFilePath($file).'.js');
+	}
+
+	private static function setTag($fileName)
 	{
 		return '<script type="text/javascript" src="'.WebJSViewPath.parent::setFilePath($fileName).'"></script>'.PHP_EOL;
 	}
-
 }

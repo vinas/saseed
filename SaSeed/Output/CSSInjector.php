@@ -4,43 +4,37 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2015/10/21
-* @version 1.15.1021
+* @version 2.16.1031
 * @license SaSeed\license.txt
 */
 
 namespace SaSeed\Output;
 
-Final class CSSInjector extends \SaSeed\Handlers\File
+Final class CSSInjector extends \SaSeed\Handlers\Files
 {
 
-	/**
-	* Declare CSS files contained in the general css folder
-	*/
-	public static function declareGeneralCSS()
+	public static function declareGeneral()
 	{
-		$files = scandir(MainCssPath);
-		$totFiles = count($files);
-		if ($totFiles > 2) {
-			for ($i = 2; $i < $totFiles; $i++) {
-				echo self::setCSSTag($files[$i]);
+		self::declareFilesInFolder('');
+	}
+
+	public static function declareFilesInFolder($folder)
+	{
+		$files = parent::getFilesFromFolder(MainCssPath.$folder.DIRECTORY_SEPARATOR, 'js');
+		if ($files) {
+			foreach ($files as $file) {
+				echo self::setTag($folder.'/'.$file);
 			}
 		}
 	}
 
-	/**
-	* Declare a specific CSS file
-	*
-	* @param string - file name
-	*/
-	public static function declareSpecificCSS($file)
+	public static function declareSpecific($file)
 	{
-		echo self::setCSSTag($file).'.css';
+		echo self::setTag(parent::setFilePath($file).'.js');
 	}
 
-
-	private static function setCSSTag($file)
+	private static function setTag($file)
 	{
 		return '<link href="'.WebCSSViewPath.parent::setFilePath($file).'" rel="stylesheet"/>'.PHP_EOL;
 	}
-
 }

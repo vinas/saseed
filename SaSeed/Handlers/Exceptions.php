@@ -4,7 +4,7 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2016/09/01
-* @version 1.16.1027
+* @version 1.16.1031
 * @license SaSeed\license.txt
 */
 
@@ -36,5 +36,4 @@ Final class Exceptions
 	{
 		throw New \Exception ("[".$path."::".$method."] - ".$msg.PHP_EOL);
 	}
-
 }

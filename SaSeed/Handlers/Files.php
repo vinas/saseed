@@ -4,46 +4,41 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2015/10/21
-* @version 1.15.1021
+* @version 2.15.1031
 * @license SaSeed\license.txt
 */
 
 namespace SaSeed\Output;
 
-class File
+class Files
 {
 
 	/**
-	* Render all files' contents from given folder
+	* Get all files' names in a folder given folder. The second
+	* parameter will serve as a filter for file extensions.
 	*
-	* @param string - folder name
-	* @param string - file type name
+	* @param string
+	* @param string
+	* @return array
 	*/
-	public static function renderFilesFromFolder($folder, $type)
+	public static function getFilesFromFolder($folder, $ext = false)
 	{
 		$files = scandir($folder);
-		$totFiles = count($files);
-		if ($totFiles > 2) {
-			switch ($type) {
-				case 'js':
-					echo '<script>'.PHP_EOL;
-					break;
-				case 'css':
-					echo '<style>'.PHP_EOL;
-					break;
+		if (count($files) > 2) {
+			if ($ext) {
+				$res = [];
+				for ($i = 0; $i < count($files); $i++) {
+					$pathInfo = pathinfo($folder.$files[$i]);
+					if ($pathInfo['extension'] == $ext)
+						$res[] = $files[$i];
+				}
+				return $res;
 			}
-			for ($i = 2; $i < $totFiles; $i++) {
-				require_once($folder.DIRECTORY_SEPARATOR.$files[$i]);
-			}
-			switch ($type) {
-				case 'js':
-					echo '</script>'.PHP_EOL;
-					break;
-				case 'css':
-					echo '</style>'.PHP_EOL;
-					break;
-			}
+			unset($files[0]);
+			unset($files[1]);
+			return array_slice($files, 2);
 		}
+		return false;
 	}
 
 	/**

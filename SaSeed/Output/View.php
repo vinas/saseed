@@ -9,7 +9,7 @@
 * @author Leandro Menezes
 * @author Raphael Pawlik
 * @since 2012/11/14
-* @version 1.16.1026
+* @version 1.16.1031
 * @license SaSeed\license.txt
 */
 
@@ -19,7 +19,7 @@ use SaSeed\Handlers\Exceptions;
 use SaSeed\Output\JavaScriptInjector;
 use SaSeed\Output\CSSInjector;
 
-Final class View extends \SaSeed\Handlers\File
+Final class View extends \SaSeed\Handlers\Files
 {
 
 	public static $data	= Array();

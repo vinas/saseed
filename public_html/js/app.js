@@ -31,5 +31,5 @@ var app = angular.module('saSeed', ['ngRoute'])
 			})
 			.otherwise({
 				redirectTo: '/home'
-			})
+			});
 	}]);

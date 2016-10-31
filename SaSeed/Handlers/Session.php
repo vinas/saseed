@@ -10,7 +10,7 @@
 * @author Leandro Menezes
 * @author Raphael Pawlik
 * @since 2012/11/14
-* @version 1.16.0901
+* @version 1.16.1031
 * @license SaSeed\license.txt
 */
 
@@ -18,7 +18,7 @@ namespace SaSeed\Handlers;
 
 use SaSeed\Handlers\Exceptions;
 
-Final class Session
+Final class Sessions
 {
 
 	/**
