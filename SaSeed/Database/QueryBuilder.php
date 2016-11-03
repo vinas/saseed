@@ -6,7 +6,7 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2016/10/25
-* @version 1.16.1027
+* @version 1.16.1103
 * @license SaSeed\license.txt
 *
 */
@@ -222,9 +222,9 @@ class QueryBuilder
 	*/
 	public function where($clause)
 	{
-		if (is_array($clause) && $clause[0] && $clause[2] && $clause[2]) {
+		if (is_array($clause) && $clause[0] && $clause[1] && $clause[2]) {
 			$this->conditions = ($this->conditions) ? $this->conditions.' AND ' : '';
-			if ($clause[3])
+			if (isset($clause[3]))
 				$this->conditions .= $clause[3].'.';
 			$this->conditions .= $clause[0]." ".$clause[1]." '".$clause[2]."'";
 			$this->query->setWhere($this->conditions);

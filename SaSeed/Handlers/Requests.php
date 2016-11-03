@@ -9,13 +9,13 @@
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @author Leandro Menezes
 * @since 2012/11/14
-* @version 1.16.1031
+* @version 1.16.1103
 * @license SaSeed\license.txt
 */
 
 namespace SaSeed\Handlers;
 
-class Requests
+Final class Requests
 {
 
 	/**
@@ -23,7 +23,7 @@ class Requests
 	*
 	* @return string
 	*/
-	public function getController()
+	public static function getController()
 	{
 		$params = self::getAllURLParams();
 		return (empty($params[contrlPos])) ? 'IndexController' : $params[contrlPos].'Controller';
@@ -34,7 +34,7 @@ class Requests
 	*
 	* @return string
 	*/
-	public function getActionFunction()
+	public static function getActionFunction()
 	{
 		$params = self::getAllURLParams();
 		$pos = contrlPos + 1;
@@ -50,7 +50,7 @@ class Requests
 	*
 	* @return array
 	*/
-	public function getParams()
+	public static function getParams()
 	{
 		$params = self::getPostParams();
 		if ($params) {
@@ -96,7 +96,7 @@ class Requests
 	*
 	* @return array
 	*/
-	private function getPostParams()
+	private static function getPostParams()
 	{
 		return $_POST;
 	}
@@ -106,7 +106,7 @@ class Requests
 	*
 	* @return array
 	*/
-	private function getGetParams()
+	private static function getGetParams()
 	{
 		return $_GET;
 	}

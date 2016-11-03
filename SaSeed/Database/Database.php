@@ -8,7 +8,7 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2015/04/16
-* @version 2.16.1026
+* @version 2.16.1103
 * @license SaSeed\license.txt
 *
 * @todo This needs a complete documentation and refactor.
@@ -86,7 +86,8 @@ class Database
 						$query .= ', '.$max;
 					}
 				}
-				return $this->fetchAssoc($this->runQuery($query));
+				$stmt = $this->runQuery($query);
+				return ($stmt) ? $this->fetchAssoc($stmt) : [];
 			} catch (Exception $e) {
 				Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
 				return [];

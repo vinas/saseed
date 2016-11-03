@@ -7,7 +7,7 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2012/11/15
-* @version 1.16.1031
+* @version 1.16.1103
 * @license SaSeed\license.txt
 */
 
@@ -22,8 +22,7 @@ require_once("autoload.php");
 
 use SaSeed\Handlers\Requests;
 
-$Requests = new Requests();
-$controller = "\Application\Controller\\".$Requests->getController();
-$actionMethod	= $Requests->getActionFunction();
+$controller = "\Application\Controller\\".Requests::getController();
+$actionMethod =  Requests::getActionFunction();
 $obj = new $controller;
 $obj->$actionMethod();

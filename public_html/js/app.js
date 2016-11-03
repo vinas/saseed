@@ -27,10 +27,15 @@ var app = angular.module('saSeed', ['ngRoute'])
 				templateUrl: 'templates/xampp-doc-root.html'
 			})
 			.when('/documentation', {
-				templateUrl: 'templates/documentation.html'
+				templateUrl: 'templates/documentation.html',
+				controller: 'docController'
 			})
 			.when('/contact', {
 				templateUrl: 'templates/contact.html'
+			})
+			.when('/admin', {
+				templateUrl: 'templates/admin-form.html',
+				controller: 'adminController'
 			})
 			.otherwise({
 				redirectTo: '/home'

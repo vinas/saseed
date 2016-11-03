@@ -4,7 +4,7 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2015/10/28
-* @version 1.16.1027
+* @version 1.16.1103
 * @license SaSeed\license.txt
 */
 
@@ -12,7 +12,7 @@ namespace SaSeed\Handlers;
 
 use SaSeed\Handlers\Exceptions;
 
-class Mapper
+Final class Mapper
 {
 
 	/**
@@ -24,12 +24,12 @@ class Mapper
 	* @param object
 	* @param array
 	*/
-	public function populate($dest, $src) {
+	public static function populate($dest, $src) {
 		try {
 			if (is_array($src)) {
-				return $this->populateFromArray($dest, $src);
+				return self::populateFromArray($dest, $src);
 			} else if (is_object($src)) {
-				return $this->populateFromObject($dest, $src);
+				return self::populateFromObject($dest, $src);
 			}
 			return $src;
 		} catch (Exception $e) {
@@ -37,7 +37,7 @@ class Mapper
 		}
 	}
 
-	private function populateFromArray($dest, $src)
+	private static function populateFromArray($dest, $src)
 	{
 		try {
 			$attrs = $dest->listProperties();
@@ -51,7 +51,7 @@ class Mapper
 		}
 	}
 
-	private function populateFromObject($dest, $src)
+	private static function populateFromObject($dest, $src)
 	{
 		try {
 			$destAttrs = $dest->listProperties();
