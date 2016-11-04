@@ -15,33 +15,33 @@ use SaSeed\Handlers\Exceptions;
 use Application\Model\PostModel;
 use Application\Model\CategoryResponseModel;
 use Application\Model\TitleModel;
+use Application\Model\ParentChildModel;
 
 class PostFactory extends \SaSeed\Database\DAO {
 
     private $db;
-    private $queryBuilder;
     private $table = 'posts';
 
     public function __construct()
     {
         $this->db = parent::setDatabase('hostinger');
-        $this->queryBuilder = parent::setQueryBuilder();
     }
 
     public function getById($postId = false)
     {
         $post = new PostModel();
         try {
-            $this->queryBuilder->from($this->table);
-            $this->queryBuilder->where([
+            $queryBuilder = parent::setQueryBuilder();
+            $queryBuilder->from($this->table);
+            $queryBuilder->where([
                     'id',
                     '=',
                     $postId,
-                    $this->queryBuilder->getMainTableAlias()
+                    $queryBuilder->getMainTableAlias()
                 ]);
             $post = Mapper::populate(
                     $post,
-                    $this->db->getRow($this->queryBuilder->getQuery())
+                    $this->db->getRow($queryBuilder->getQuery())
                 );
         } catch (Exception $e) {
             Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
@@ -54,8 +54,9 @@ class PostFactory extends \SaSeed\Database\DAO {
     {
         $post = [];
         try {
-            $this->queryBuilder->from($this->table);
-            $post = $this->db->getRows($this->queryBuilder->getQuery());
+            $queryBuilder = parent::setQueryBuilder();
+            $queryBuilder->from($this->table);
+            $post = $this->db->getRows($queryBuilder->getQuery());
             for ($i = 0; $i < count($post); $i++) {
                 $post[$i] = Mapper::populate(
                         new PostModel(),
@@ -73,9 +74,10 @@ class PostFactory extends \SaSeed\Database\DAO {
     {
         $list = [];
         try {
-            $this->queryBuilder->from($this->table);
-            $this->queryBuilder->where(['isActive', '=', 1]);
-            $list = $this->db->getRows($this->queryBuilder->getQuery());
+            $queryBuilder = parent::setQueryBuilder();
+            $queryBuilder->from($this->table);
+            $queryBuilder->where(['isActive', '=', 1]);
+            $list = $this->db->getRows($queryBuilder->getQuery());
             for ($i = 0; $i < count($list); $i++) {
                 $list[$i] = Mapper::populate(
                         new PostModel(),
@@ -93,10 +95,33 @@ class PostFactory extends \SaSeed\Database\DAO {
     {
         $list = [];
         try {
-            $this->queryBuilder->from($this->table);
-            $this->queryBuilder->select(['id', 'title']);
-            $this->queryBuilder->where(['isActive', '=', 1]);
-            $list = $this->db->getRows($this->queryBuilder->getQuery());
+            $queryBuilder = parent::setQueryBuilder();
+            $queryBuilder->from($this->table);
+            $queryBuilder->select(['id', 'title']);
+            $queryBuilder->where(['isActive', '=', 1]);
+            $list = $this->db->getRows($queryBuilder->getQuery());
+            for ($i = 0; $i < count($list); $i++) {
+                $list[$i] = Mapper::populate(
+                        new TitleModel(),
+                        $list[$i]
+                    );
+            }
+        } catch (Exception $e) {
+            Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
+        } finally {
+            return $list;
+        }
+    }
+
+    public function getTitlesByTitle($titlePart)
+    {
+        $list = [];
+        try {
+            $queryBuilder = parent::setQueryBuilder();
+            $queryBuilder->from($this->table);
+            $queryBuilder->select(['id', 'title']);
+            $queryBuilder->where(['title', 'LIKE', "%{$titlePart}%"]);
+            $list = $this->db->getRows($queryBuilder->getQuery());
             for ($i = 0; $i < count($list); $i++) {
                 $list[$i] = Mapper::populate(
                         new TitleModel(),
@@ -113,15 +138,14 @@ class PostFactory extends \SaSeed\Database\DAO {
     public function saveNew($post)
     {
         try {
-            $now = date("Y-m-d");
             $this->db->insertRow(
                 $this->table,
                 array(
                     $post->getCategoryId(),
                     $post->getTitle(),
                     $post->getContent(),
-                    $now,
-                    $now,
+                    $post->getDate(),
+                    $post->getLastUpdated(),
                     1
                 )
             );
@@ -135,6 +159,7 @@ class PostFactory extends \SaSeed\Database\DAO {
 
     public function update($post)
     {
+
         $res = false;
         try {
             if (!$post->getId()) {
@@ -149,14 +174,17 @@ class PostFactory extends \SaSeed\Database\DAO {
                 $this->table,
                 array(
                     $post->getCategoryId(),
+                    $post->getTitle(),
                     $post->getContent(),
-                    'NOW()',
+                    $post->getLastUpdated(),
                     1
                 ),
                 array(
                     'categoryId',
+                    'title',
                     'content',
-                    'lastUpdated'
+                    'lastUpdated',
+                    'isActive'
                 ),
                 "id = ".$post->getId()
             );
@@ -200,13 +228,14 @@ class PostFactory extends \SaSeed\Database\DAO {
     {
         $list = [];
         try {
-            $this->queryBuilder->from('parentChild');
-            $this->queryBuilder->select(['id', 'title']);
-            $this->queryBuilder->where(['parentId', '=', $parent]);
-            $list = $this->db->getRows($this->queryBuilder->getQuery());
+            $queryBuilder = parent::setQueryBuilder();
+            $queryBuilder->from('parentChild');
+            $queryBuilder->select(['id', 'parentId', 'childId']);
+            $queryBuilder->where(['parentId', '=', $parent]);
+            $list = $this->db->getRows($queryBuilder->getQuery());
             for ($i = 0; $i < count($list); $i++) {
                 $list[$i] = Mapper::populate(
-                        new TitleModel(),
+                        new ParentChildModel(),
                         $list[$i]
                     );
             }

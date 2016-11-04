@@ -23,14 +23,32 @@ class PostService {
         $this->factory = new PostFactory();
     }
 
+    public function getById($id = false)
+    {
+        try {
+            if ($id > 1)
+                return $this->factory->getById($id);
+            if ($id == 1) {
+                $children = $this->getChildren(1);
+                if (isset($children[0]))
+                    return $this->factory->getById($children[0]->getChildId());
+            }
+        } catch (Exception $e) {
+            Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
+        }
+        return (object) [];
+    }
+
     public function save($post)
     {
         try {
             $post->setTitle(str_replace("'", '&#39;', $post->getTitle()));
             $post->setContent(str_replace("'", '&#39;', $post->getContent()));
+            $post->setLastUpdated(date("Y-m-d"));
             if ($post->getId() > 0) {
                 $this->factory->update($post);
             } else {
+                $post->setDate(date("Y-m-d"));
                 $post = $this->factory->saveNew($post);
             }
         } catch (Exception $e) {
@@ -40,15 +58,15 @@ class PostService {
         }
     }
 
-    public function getTitleList()
+    public function getTitleList($filter)
     {
-        $res = [];
         try {
-            $res = $this->factory->listAllTitleActive();
+            if ($filter)
+                return $this->factory->getTitlesByTitle($filter);
+            return $this->factory->listAllTitleActive();
         } catch (Exception $e) {
             Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
-        } finally {
-            return $res;
+            return [];
         }
     }
 

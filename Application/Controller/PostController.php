@@ -28,6 +28,19 @@ class PostController
         $this->service = new PostService();
     }
 
+    public function get()
+    {
+        $res = (object) [];
+        try {
+            $params = Requests::getParams();
+            $res = $this->service->getById((isset($params[0])) ? $params[0] : false);
+        } catch (Exception $e) {
+            Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
+        } finally {
+            View::renderJson($res);
+        }
+    }
+
     public function save()
     {
         $res = [];
@@ -47,7 +60,8 @@ class PostController
     {
         $res = [];
         try {
-            $res = $this->service->getTitleList();
+            $params = Requests::getParams();
+            $res = $this->service->getTitleList((isset($params[0])) ? $params[0] : false);
         } catch (Exception $e) {
             Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
         } finally {
@@ -56,18 +70,6 @@ class PostController
     }
 
     public function getChildren()
-    {
-        $res = [];
-        try {
-            $res = $this->service->getChildren();
-        } catch (Exception $e) {
-            Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
-        } finally {
-            View::renderJson($res);
-        }
-    }
-
-    public function get()
     {
         $res = [];
         try {

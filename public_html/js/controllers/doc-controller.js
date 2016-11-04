@@ -1,16 +1,17 @@
-app.controller('docController', function($scope, PostFactory) {
+app.controller('docController', function($scope, $routeParams, $sce, PostFactory) {
     $scope.post = {};
 
     $scope.getPost = function(id)
     {
         PostFactory.get(id).then(function(res) {
             $scope.post = res.data;
+            $scope.post.content = $sce.trustAsHtml($scope.post.content);
         });
     };
 
-    ver init() = function()
+    var init = function()
     {
-        $scope.getPost(0);
+        $scope.getPost(($routeParams.id) ? $routeParams.id : 1);
     };
 
     init();

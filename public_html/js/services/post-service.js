@@ -1,8 +1,23 @@
 app.service('PostService', function(PostFactory, ResponseService) {
 
-    this.getTitleList = function()
+    this.get = function(id)
     {
-        return PostFactory.getTitleList()
+        return PostFactory.get(id)
+            .success(function(post) {
+                if (post.title)
+                    return post;
+                ResponseService.error(601);
+                return {};
+            })
+            .error(function(res, status) {
+                ResponseService.error(600, res, status);
+                return {};
+            });
+    };
+
+    this.getTitleList = function(q)
+    {
+        return PostFactory.getTitleList((q) ? q : '')
             .success(function(parents) {
                 if (parents.length > 0)
                     return parents;

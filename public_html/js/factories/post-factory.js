@@ -1,8 +1,8 @@
 app.factory('PostFactory', function($http) {
 
-    this.getTitleList = function()
+    this.getTitleList = function(q)
     {
-        return $http.get('api/Post/getTitleList/');
+        return $http.get('api/Post/getTitleList/'+q);
     };
 
     this.save = function(post)

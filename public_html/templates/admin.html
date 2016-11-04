@@ -1,0 +1,12 @@
+<div>
+    <a ng-href="#/admin/form">new post</a><br/>
+    <br/>
+    <input type="text" ng-model="q" />
+    <button ng-click="searchForPosts(q)">search</button>
+    <br/><br/>
+    <div id="searchResult">
+        <div ng-repeat="title in titleList">
+            <a ng-href="#/admin/form/{{title.id}}">{{title.title}}</a><br/>
+        </div>
+    </div>
+</div>

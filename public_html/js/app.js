@@ -30,12 +30,26 @@ var app = angular.module('saSeed', ['ngRoute'])
 				templateUrl: 'templates/documentation.html',
 				controller: 'docController'
 			})
+			.when('/documentation/:id', {
+				templateUrl: 'templates/documentation.html',
+				controller: 'docController'
+			})
 			.when('/contact', {
 				templateUrl: 'templates/contact.html'
 			})
 			.when('/admin', {
-				templateUrl: 'templates/admin-form.html',
+				templateUrl: 'templates/admin.html',
 				controller: 'adminController'
+			})
+			.when('/admin/form/:id', {
+				templateUrl: 'templates/admin-form.html',
+				controller: 'adminController',
+				loadables: true
+			})
+			.when('/admin/form', {
+				templateUrl: 'templates/admin-form.html',
+				controller: 'adminController',
+				loadables: true
 			})
 			.otherwise({
 				redirectTo: '/home'

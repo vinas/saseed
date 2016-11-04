@@ -1,11 +1,13 @@
 <span>Search Parent: </span><input type="text" ng-model="q" /><br/>
+<input type="radio" ng-model="post.parentId" value="1"> No parent<br/>
 <div ng-repeat="parent in parents| filter: q">
-    <input type="radio" ng-model="post.parentId" value="{{parent.id}}" checked> {{parent.title}}<br/>
+    <input type="radio" ng-model="post.parentId" value="{{parent.id}}"> {{parent.title}}<br/>
 </div>
 <br/>
 <input type="hidden" ng-model="post.id" value="" />
 Category: 
 <select ng-model="post.categoryId">
+
     <option ng-repeat="category in categories" value="{{category.id}}">
         {{category.category}}
     </option>
