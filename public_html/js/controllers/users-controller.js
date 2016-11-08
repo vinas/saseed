@@ -4,7 +4,7 @@ app.controller('usersController', function($scope, $routeParams, $location, User
  	{
 		UsersFactory.getUsersList()
             .success(function(users) {
-                $scope.users = users;
+                $scope.users = users.content;
 				$scope.templateURL = 'templates/users-list.html';
             })
             .error(function(res, status) {
@@ -22,7 +22,7 @@ app.controller('usersController', function($scope, $routeParams, $location, User
 	{
 		UsersFactory.getUserById(id)
             .success(function(user) {
-                $scope.user = user;
+                $scope.user = user.content;
 				$scope.templateURL = 'templates/users-form.html';
             })
             .error(function(response, status) {
@@ -39,14 +39,13 @@ app.controller('usersController', function($scope, $routeParams, $location, User
 	$scope.save = function()
 	{
 		if (UsersService.isUserDataValid($scope.user)) {
-			$scope.user.password = $scope.user.password1;
 			UsersService.save($scope.user)
 				.success(function(user) {
 					if (user.code != 200) {
 						console.log('Error: ' + user.message);
 						return false;
 					}
-					$scope.users = UsersService.placeUserOnList($scope.users, user);
+					$scope.users = UsersService.placeUserOnList($scope.users, user.content);
 					$location.url('users/');
 	        	})
 	            .error(function(response, status) {
@@ -61,8 +60,8 @@ app.controller('usersController', function($scope, $routeParams, $location, User
 		if (confirm('You sure?')) {
 			UsersService.delete(id)
 				.success(function(res) {
-					if (res.code != 202) {
-						console.log('tratar erro: ' + res.message);
+					console.log(res);
+					if (res.code != 200) {
 						return false;
 					}
 					$scope.users = UsersService.removeUserFromList($scope.users, id);

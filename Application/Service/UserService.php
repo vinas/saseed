@@ -25,7 +25,6 @@ class UserService {
 
 	public function save($user)
 	{
-		$user = false;
 		try {
 			if ($this->isUserValid($user)) {
 				if ($user->getId() > 0) {
@@ -79,10 +78,15 @@ class UserService {
 
 	private function isUserValid($user)
 	{
-		if (strlen($user->getName()) > 1)
+		if (!is_object($user)){
 			return false;
-		if (strlen($user->getEmail()) > 1)
+		}
+		if (strlen($user->getName()) < 1){
 			return false;
+		}
+		if (strlen($user->getEmail()) < 1){
+			return false;
+		}
 		return true;
 	}
 

@@ -2,7 +2,6 @@ app.factory('UsersFactory', function($http) {
 
 	this.getUsersList = function()
 	{
-
 		return $http.get('api/Users/listUsers/');
 	};
 

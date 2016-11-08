@@ -65,13 +65,13 @@ class UsersController
 
 	public function save()
 	{
-		$user = false;
 		try {
 			$user = Mapper::populate(new UserModel(), Requests::getParams());
 			$user = $this->service->save($user);
 			$res = $this->responseHandler->handleCode(200);
 		} catch (Exception $e) {
 			Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
+			$user = false;
 			$res = $this->responseHandler->handleErrorMessage($e->getMessage());
 		} finally {
 			RestView::render($user, $res);
