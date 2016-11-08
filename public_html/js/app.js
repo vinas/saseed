@@ -3,7 +3,7 @@ var app = angular.module('app', ['ngRoute'])
 		$locationProvider.html5Mode(false);
 		$routeProvider
 			.when('/', {
-				redirectTo: '/home',
+				redirectTo: '/home'
 			})
 			.when('/home', {
 				templateUrl: 'templates/home.html'
