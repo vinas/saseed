@@ -9,7 +9,7 @@
 * @author Leandro Menezes
 * @author Raphael Pawlik
 * @since 2012/11/14
-* @version 1.16.1031
+* @version 1.16.1108
 * @license SaSeed\license.txt
 */
 
@@ -139,14 +139,13 @@ Final class View extends \SaSeed\Handlers\Files
 	/**
 	* Prints an array encoded in Json
 	*
-	* @param array
+	* @param mixed
 	*/
-	public static function renderJson($array) 
+	public static function renderJson($data) 
 	{
 		try {
 			ob_start();
-			extract(self::$data);
-			echo json_encode($array);
+			echo json_encode($data);
 			ob_end_flush();
 		} catch (Exception $e) {
 			Exceptions::throwNew(

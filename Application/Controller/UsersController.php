@@ -10,13 +10,12 @@
 
 namespace Application\Controller;
 
-use SaSeed\Output\View;
+use SaSeed\Output\RestView;
 use SaSeed\Handlers\Requests;
 use SaSeed\Handlers\Exceptions;
 use SaSeed\Handlers\Mapper;
 
 use Application\Model\UserModel;
-use Application\Model\UserResponseModel;
 use Application\Service\ResponseHandlerService;
 use Application\Service\UserService;
 
@@ -24,65 +23,72 @@ class UsersController
 {
 
 	private $service;
+	private $responseHandler;
 
 	public function __construct()
 	{
 		$this->service = new UserService();
+		$this->responseHandler = new ResponseHandlerService();
 	}
 
 	public function listUsers()
 	{
-		$res = [];
 		try {
-			$res = $this->service->listUsers();
+			$users = $this->service->listUsers();
+			$res = $this->responseHandler->handleCode(200);
 		} catch (Exception $e) {
 			Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
+			$res = $this->responseHandler->handleErrorMessage($e->getMessage());
 		} finally {
-			View::renderJson($res);
+			RestView::render($users, $res);
 		}
 	}
 
 	public function getUser()
 	{
-		$responseHandler = new ResponseHandlerService();
-		$res = $responseHandler->handleResponse(new UserResponseModel());
+		$user = false;
 		try {
 			$params = Requests::getParams();
-			$res = $this->service->getUserById($params[0]);
+			$user = $this->service->getUserById($params[0]);
+			if ($user) {
+				$res = $this->responseHandler->handleCode(200);
+			} else {
+				$res = $this->responseHandler->handleWarningMessage('No user found.', 200);
+			}
 		} catch (Exception $e) {
 			Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
+			$res = $this->responseHandler->handleErrorMessage($e->getMessage());
 		} finally {
-			View::renderJson($res);
+			RestView::render($user, $res);
 		}
 	}
 
 	public function save()
 	{
-		$responseHandler = new ResponseHandlerService();
-		$res = $responseHandler->handleResponse(new UserResponseModel());
+		$user = false;
 		try {
-			$mapper = new Mapper();
-			$user = $mapper->populate(new UserModel(), Requests::getParams());
-			$res = $this->service->save($user);
+			$user = Mapper::populate(new UserModel(), Requests::getParams());
+			$user = $this->service->save($user);
+			$res = $this->responseHandler->handleCode(200);
 		} catch (Exception $e) {
 			Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
+			$res = $this->responseHandler->handleErrorMessage($e->getMessage());
 		} finally {
-			View::renderJson($res);
+			RestView::render($user, $res);
 		}
 	}
 
 	public function delete()
 	{
-		$responseHandler = new ResponseHandlerService();
-		$res = $responseHandler->handleResponse(new UserResponseModel());
 		try {
 			$params = Requests::getParams();
 			$this->service->delete($params[0]);
-			$res = $responseHandler->handleResponse($res, 202);
+			$res = $this->responseHandler->handleInfoMessage('User deleted.', 200);
 		} catch (Exception $e) {
 			Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
+			$res = $this->responseHandler->handleErrorMessage($e->getMessage());
 		} finally {
-			View::renderJson($res);
+			RestView::render(false, $res);
 		}
 	}
 }

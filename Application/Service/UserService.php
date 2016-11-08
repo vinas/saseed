@@ -11,11 +11,8 @@
 namespace Application\Service;
 
 use SaSeed\Handlers\Exceptions;
-use SaSeed\Handlers\Mapper;
 
 use Application\Factory\UserFactory;
-use Application\Service\ResponseHandlerService;
-use Application\Model\UserResponseModel;
 
 class UserService {
 
@@ -28,8 +25,7 @@ class UserService {
 
 	public function save($user)
 	{
-		$responseHandler = new ResponseHandlerService();
-		$res = new UserResponseModel();
+		$user = false;
 		try {
 			if ($this->isUserValid($user)) {
 				if ($user->getId() > 0) {
@@ -37,58 +33,38 @@ class UserService {
 				} else {
 					$user = $this->factory->saveNew($user);
 				}
-				$res = Mapper::populate(
-						$res,
-						$user
-					);
-				$res = $responseHandler->handleResponse($res, 200);
-			} else {
-				$res = $responseHandler->handleResponse($res, 100);
 			}
 		} catch (Exception $e) {
 			Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
-			$res = $responseHandler->handleResponse($res, 101);
 		} finally {
-			return $res;
+			return $user;
 		}
 	}
 
 	public function listUsers()
 	{
-		$res = [];
+		$list = [];
 		try {
-			$res = $this->factory->listAll();
+			$list = $this->factory->listAll();
 		} catch (Exception $e) {
 			Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
 		} finally {
-			return $res;
+			return $list;
 		}
 	}
 
 	public function getUserById($userId = false)
 	{
-		$responseHandler = new ResponseHandlerService();
-		$res = new UserResponseModel();
+		$user = false;
 		try {
-			if ($userId) {
+			if ($userId)
 				$user = $this->factory->getById($userId);
-				if ($user->getId() > 0 && is_numeric($user->getId())) {
-					$res = Mapper::populate(
-							$res,
-							$user
-						);
-					$res = $responseHandler->handleResponse($res, 201);
-				} else {
-					$res = $responseHandler->handleResponse($res, 102);
-				}
-			} else {
-				$res = $responseHandler->handleResponse($res, 103);
-			}
+			if (isset($user->id) && $user->getId() == false)
+				$user = false;
 		} catch (Exception $e) {
 			Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
-			$res = $responseHandler->handleResponse($res, 102);
 		} finally {
-			return $res;
+			return $user;
 		}
 	}
 
@@ -103,16 +79,11 @@ class UserService {
 
 	private function isUserValid($user)
 	{
-		if (strlen($user->getName()) < 1)
+		if (strlen($user->getName()) > 1)
 			return false;
-		if (strlen($user->getEmail()) < 1)
+		if (strlen($user->getEmail()) > 1)
 			return false;
 		return true;
-	}
-
-	private function encrypt($txt)
-	{
-		return md5($txt);
 	}
 
 }

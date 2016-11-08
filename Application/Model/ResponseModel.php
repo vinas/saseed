@@ -10,14 +10,12 @@
 
 namespace Application\Model;
 
-class UserResponseModel implements \JsonSerializable
+class ResponseModel implements \JsonSerializable
 {
 
 	private $code;
 	private $message;
-	private $id;
-	private $user;
-	private $email;
+	private $content;
 
 	public function setCode($code)
 	{
@@ -37,25 +35,11 @@ class UserResponseModel implements \JsonSerializable
 		return $this->message;
 	}
 
-	public function setId($id = false) {
-		$this->id = $id;
+	public function setContent($content = false) {
+		$this->content = $content;
 	}
-	public function getId() {
-		return $this->id;
-	}
-
-	public function setUser($user = false) {
-		$this->user = $user;
-	}
-	public function getUser() {
-		return $this->user;
-	}
-
-	public function setEmail($email = false) {
-		$this->email = $email;
-	}
-	public function getEmail() {
-		return $this->email;
+	public function getContent() {
+		return $this->content;
 	}
 
 	public function listProperties() {

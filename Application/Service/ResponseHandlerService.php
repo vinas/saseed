@@ -12,43 +12,61 @@ namespace Application\Service;
 
 use SaSeed\Handlers\Exceptions;
 
+use Application\Model\ResponseModel;
+
 class ResponseHandlerService
 {
-	public function handleResponse($res, $code = false)
+	public function handleCode($code)
 	{
+		$res = new ResponseModel();
+
 		switch ($code) {
-			case 100:
-				$res->setCode($code);
-				$res->setMessage($this->error('Empty or invalid user data.'));
-				break;
-			case 101:
-				$res->setCode($code);
-				$res->setMessage($this->error('User could not be saved.'));
-				break;
-			case 102:
-				$res->setCode($code);
-				$res->setMessage($this->error('User could not be loaded.'));
-				break;
-			case 103:
-				$res->setCode($code);
-				$res->setMessage($this->error('Empty or invalid user id.'));
-				break;
 			case 200:
 				$res->setCode($code);
-				$res->setMessage($this->info('User saved successfully.'));
+				$res->setMessage($this->info('Everything went just fine!'));
 				break;
-			case 201:
+			case 500:
 				$res->setCode($code);
-				$res->setMessage($this->info('User loaded successfully.'));
-				break;
-			case 202:
-				$res->setCode($code);
-				$res->setMessage($this->info('User deleted successfully.'));
+				$res->setMessage($this->error('It seems something went wrong... check back-end logs.'));
 				break;
 			default:
 				$res->setCode(666);
 				$res->setMessage($this->warning());
 		}
+
+		return $res;
+	}
+
+	public function handleErrorMessage($msg = false, $code = true)
+	{
+		$res = new ResponseModel();
+		if ($code === true)
+			$res->setCode(500);
+		if ($code > 0)
+			$res->setCode($code);
+		$res->setMessage($this->error($msg));
+		return $res;
+	}
+
+	public function handleInfoMessage($msg = false, $code = true)
+	{
+		$res = new ResponseModel();
+		if ($code === true)
+			$res->setCode(100);
+		if ($code > 0)
+			$res->setCode($code);
+		$res->setMessage($this->info($msg));
+		return $res;
+	}
+
+	public function handleWarningMessage($msg = false, $code = true)
+	{
+		$res = new ResponseModel();
+		if ($code === true)
+			$res->setCode(100);
+		if ($code > 0)
+			$res->setCode($code);
+		$res->setMessage($this->warning($msg));
 		return $res;
 	}
 
