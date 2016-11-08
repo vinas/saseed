@@ -14,9 +14,8 @@ class UserModel implements \JsonSerializable
 {
 
 	private $id;
-	private $user;
+	private $name;
 	private $email;
-	private $password;
 
 	public function setId($id = false) {
 		$this->id = $id;
@@ -25,11 +24,11 @@ class UserModel implements \JsonSerializable
 		return $this->id;
 	}
 
-	public function setUser($user = false) {
-		$this->user = $user;
+	public function setName($name = false) {
+		$this->name = $name;
 	}
-	public function getUser() {
-		return $this->user;
+	public function getName() {
+		return $this->name;
 	}
 
 	public function setEmail($email = false) {
@@ -37,13 +36,6 @@ class UserModel implements \JsonSerializable
 	}
 	public function getEmail() {
 		return $this->email;
-	}
-
-	public function setPassword($password = false) {
-		$this->password = $password;
-	}
-	public function getPassword() {
-		return $this->password;
 	}
 
 	public function listProperties() {

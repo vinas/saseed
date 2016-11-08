@@ -30,7 +30,6 @@ class UserFactory extends \SaSeed\Database\DAO {
 	{
 		$user = new UserModel();
 		try {
-			$mapper = new Mapper();
 			$this->queryBuilder->from($this->table);
 			$this->queryBuilder->where([
 					'id',
@@ -38,7 +37,7 @@ class UserFactory extends \SaSeed\Database\DAO {
 					$userId,
 					$this->queryBuilder->getMainTableAlias()
 				]);
-			$user = $mapper->populate(
+			$user = Mapper::populate(
 					$user,
 					$this->db->getRow($this->queryBuilder->getQuery())
 				);
@@ -53,12 +52,10 @@ class UserFactory extends \SaSeed\Database\DAO {
 	{
 		$users = [];
 		try {
-			$mapper = new Mapper();
 			$this->queryBuilder->from($this->table);
-			$this->queryBuilder->select(['id', 'user', 'email']);
 			$users = $this->db->getRows($this->queryBuilder->getQuery());
 			for ($i = 0; $i < count($users); $i++) {
-				$users[$i] = $mapper->populate(
+				$users[$i] = Mapper::populate(
 						new UserModel(),
 						$users[$i]
 					);
@@ -76,9 +73,8 @@ class UserFactory extends \SaSeed\Database\DAO {
 			$this->db->insertRow(
 				$this->table,
 				array(
-					$user->getUser(),
-					$user->getEmail(),
-					$user->getPassword()
+					$user->getName(),
+					$user->getEmail()
 				)
 			);
 			$user->setId($this->db->lastId());
@@ -104,14 +100,12 @@ class UserFactory extends \SaSeed\Database\DAO {
 			$this->db->update(
 				$this->table,
 				array(
-					$user->getUser(),
-					$user->getEmail(),
-					$user->getPassword()
+					$user->getName(),
+					$user->getEmail()
 				),
 				array(
-					'user',
-					'email',
-					'password'
+					'name',
+					'email'
 				),
 				"id = ".$user->getId()
 			);

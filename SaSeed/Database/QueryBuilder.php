@@ -6,7 +6,7 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2016/10/25
-* @version 1.16.1103
+* @version 1.16.1107
 * @license SaSeed\license.txt
 *
 */
@@ -247,7 +247,7 @@ class QueryBuilder
 	public function orWhere($clause)
 	{
 		if ($this->conditions) {
-			if (is_array($clause) && $clause[0] && $clause[2] && $clause[2]) {
+			if (is_array($clause) && $clause[0] && $clause[1] && $clause[2]) {
 				$this->conditions .= ' OR ';
 				if ($clause[3])
 					$this->conditions .= $clause[3].'.';

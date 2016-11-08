@@ -6,7 +6,7 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2016/10/27
-* @version 1.16.1027
+* @version 1.16.1107
 * @license SaSeed\license.txt
 *
 */
@@ -15,7 +15,7 @@ namespace SaSeed\Database;
 
 class QueryModel
 {
-	private $select = '*';
+	private $select = false;
 	private $from = false;
 	private $where = false;
 	private $limit = false;
@@ -27,7 +27,7 @@ class QueryModel
 	}
 	public function getSelect()
 	{
-		return $this->select;
+		return ($this->select) ? $this->select : '*';
 	}
 
 	public function setFrom($from)
@@ -45,9 +45,7 @@ class QueryModel
 	}
 	public function getWhere()
 	{
-		if ($this->where)
-			return $this->where;
-		return '1';
+		return ($this->where) ? $this->where : '1';
 	}
 
 	public function setLimit($limit)

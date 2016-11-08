@@ -4,7 +4,7 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2016/09/01
-* @version 1.16.1031
+* @version 1.16.1108
 * @license SaSeed\license.txt
 */
 
@@ -14,15 +14,15 @@ Final class Exceptions
 {
 
 	/**
-	* Throws a system error
+	* Throws a system exception
 	*
 	* @param string
 	* @param string
 	* @param exception
 	*/
-	public static function throwing($path, $method, $err)
+	public static function throwing($class, $method, $err)
 	{
-		throw('['.$path.'::'.$method.'] - '.$err->getMessage().PHP_EOL);
+		throw('['.$class.'::'.$method.'] - '.$err->getMessage().PHP_EOL);
 	}
 
 	/**
@@ -32,8 +32,8 @@ Final class Exceptions
 	* @param string
 	* @param string
 	*/
-	public static function throwNew($path, $method, $msg)
+	public static function throwNew($class, $method, $msg)
 	{
-		throw New \Exception ("[".$path."::".$method."] - ".$msg.PHP_EOL);
+		throw New \Exception ("[".$class."::".$method."] - ".$msg.PHP_EOL);
 	}
 }

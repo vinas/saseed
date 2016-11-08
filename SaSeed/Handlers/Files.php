@@ -4,7 +4,7 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2015/10/21
-* @version 2.15.1031
+* @version 2.16.1108
 * @license SaSeed\license.txt
 */
 
@@ -20,16 +20,16 @@ class Files
 		return $this->fileToArray($file);
 	}
 
-	public static function iniToArray($file)
+	public static function iniToArray($folder = false, $file = false)
 	{
 		try {
-			if (($folder) && $folder != '') {
+			if (($folder) && ($file) && $folder != '' && $file != '') {
 				return parse_ini_file(BasePath.parent::setFilePath($file), true);
 			}
 			Exceptions::throwNew(
 				__CLASS__,
 				__FUNCTION__,
-				'Forder not informed.'
+				'Forder and file name must be informed.'
 			);
 			return false;
 		} catch (Exception $e) {

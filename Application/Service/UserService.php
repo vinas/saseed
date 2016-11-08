@@ -16,7 +16,6 @@ use SaSeed\Handlers\Mapper;
 use Application\Factory\UserFactory;
 use Application\Service\ResponseHandlerService;
 use Application\Model\UserResponseModel;
-use Application\Model\UsersListResponseModel;
 
 class UserService {
 
@@ -30,17 +29,15 @@ class UserService {
 	public function save($user)
 	{
 		$responseHandler = new ResponseHandlerService();
-		$mapper = new Mapper();
 		$res = new UserResponseModel();
 		try {
 			if ($this->isUserValid($user)) {
-				$user->setPassword($this->encrypt($user->getPassword()));
 				if ($user->getId() > 0) {
 					$this->factory->update($user);
 				} else {
 					$user = $this->factory->saveNew($user);
 				}
-				$res = $mapper->populate(
+				$res = Mapper::populate(
 						$res,
 						$user
 					);
@@ -60,11 +57,7 @@ class UserService {
 	{
 		$res = [];
 		try {
-			$mapper = new Mapper();
-			$users = $this->factory->listAll();
-			foreach ($users as $user) {
-				$res[] = $mapper->populate(new UsersListResponseModel(), $user);
-			}
+			$res = $this->factory->listAll();
 		} catch (Exception $e) {
 			Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
 		} finally {
@@ -75,13 +68,12 @@ class UserService {
 	public function getUserById($userId = false)
 	{
 		$responseHandler = new ResponseHandlerService();
-		$mapper = new Mapper();
 		$res = new UserResponseModel();
 		try {
 			if ($userId) {
 				$user = $this->factory->getById($userId);
 				if ($user->getId() > 0 && is_numeric($user->getId())) {
-					$res = $mapper->populate(
+					$res = Mapper::populate(
 							$res,
 							$user
 						);
@@ -111,13 +103,10 @@ class UserService {
 
 	private function isUserValid($user)
 	{
-		if (strlen($user->getUser()) < 1) {
+		if (strlen($user->getName()) < 1)
 			return false;
-		} else if (strlen($user->getEmail()) < 1) {
+		if (strlen($user->getEmail()) < 1)
 			return false;
-		} else if (strlen($user->getPassword()) < 1) {
-			return false;
-		}
 		return true;
 	}
 

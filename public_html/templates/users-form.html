@@ -1,0 +1,9 @@
+<form method="post" class="form">
+	<input type="hidden" ng-model="user.id" value="{{user.id}}" />
+	user: <input type="text" ng-model="user.name" value="{{user.name}}" /><br/>
+	email: <input type="text" ng-model="user.email" value="{{user.email}}" /><br/>
+	<br/>
+	<button ng-click="save()">Save</button>
+</form>
+
+<a ng-href="#/users" >voltar</a>

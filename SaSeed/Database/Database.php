@@ -8,7 +8,7 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2015/04/16
-* @version 2.16.1103
+* @version 2.16.1107
 * @license SaSeed\license.txt
 *
 * @todo This needs a complete documentation and refactor.
@@ -175,7 +175,7 @@ class Database
 	* Inserts one row
 	*
 	* @param string
-	* @param string
+	* @param array
 	* @param array
 	* @return void
 	*/

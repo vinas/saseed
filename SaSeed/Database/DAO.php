@@ -22,7 +22,7 @@ class DAO
 	/**
 	* Set and connect to Database
 	*
-	* It loads database connection information from file Config\Database.ini
+	* It loads database connection information from file SaSeed\Settings\Database.ini
 	*
 	* @param string - database name
 	*/
