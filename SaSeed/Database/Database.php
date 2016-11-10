@@ -190,29 +190,37 @@ class Database
 	*/
 	public function insertRow($table, $values, $fields = false)
 	{
-		$query = 'INSERT INTO '.$table.' (';
-		if ($fields == false) {
-			$fields = $this->listFieldsNoId($table);
-		}
-		for ($i = 0; $i < count($fields); $i++) {
-			if ($i != 0) {
-				$query .= ', ';
+		if (!empty($table)) {
+			$query = 'INSERT INTO '.$table.' (';
+			if ($fields == false) {
+				$fields = $this->listFieldsNoId($table);
 			}
-			$query .= $fields[$i];
-		}
-		$query .= ') VALUES (';
-		for ($i = 0; $i < count($values); $i++) {
-			if ($i != 0) {
-				$query .= ', ';
+			if (count($fields) == count($values)) {
+				for ($i = 0; $i < count($fields); $i++) {
+					if ($i != 0) {
+						$query .= ', ';
+					}
+					$query .= $fields[$i];
+				}
+				$query .= ') VALUES (';
+				for ($i = 0; $i < count($values); $i++) {
+					if ($i != 0) {
+						$query .= ', ';
+					}
+					if (is_numeric($values[$i])) {
+						$query .= $values[$i];
+					} else {
+						$query .= "'".$values[$i]."'";
+					}
+				}
+				$query .= ')';
+				$this->runQuery($query);
+				return;
 			}
-			if (is_numeric($values[$i])) {
-				$query .= $values[$i];
-			} else {
-				$query .= "'".$values[$i]."'";
-			}
+			Exceptions::throwNew(__CLASS__, __FUNCTION__, 'Error: Amount of columns and values given do not match.');
+			return;
 		}
-		$query .= ')';
-		$this->runQuery($query);
+		Exceptions::throwNew(__CLASS__, __FUNCTION__, 'Error: Invalid table name.');
 	}
 
 	/**
