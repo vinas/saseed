@@ -11,7 +11,6 @@
 namespace Application\Controller;
 
 use SaSeed\Output\RestView;
-use SaSeed\Handlers\Requests;
 use SaSeed\Handlers\Exceptions;
 use SaSeed\Handlers\Mapper;
 
@@ -24,11 +23,13 @@ class UsersController
 
 	private $service;
 	private $responseHandler;
+	private $params;
 
-	public function __construct()
+	public function __construct($params)
 	{
 		$this->service = new UserService();
 		$this->responseHandler = new ResponseHandlerService();
+		$this->params = $params;
 	}
 
 	public function listUsers()
@@ -48,8 +49,7 @@ class UsersController
 	{
 		$user = false;
 		try {
-			$params = Requests::getParams();
-			$user = $this->service->getUserById($params[0]);
+			$user = $this->service->getUserById($this->params[0]);
 			if ($user) {
 				$res = $this->responseHandler->handleCode(200);
 			} else {
@@ -66,7 +66,7 @@ class UsersController
 	public function save()
 	{
 		try {
-			$user = Mapper::populate(new UserModel(), Requests::getParams());
+			$user = Mapper::populate(new UserModel(), $this->params);
 			$user = $this->service->save($user);
 			$res = $this->responseHandler->handleCode(200);
 		} catch (Exception $e) {
@@ -81,8 +81,7 @@ class UsersController
 	public function delete()
 	{
 		try {
-			$params = Requests::getParams();
-			$this->service->delete($params[0]);
+			$this->service->delete($this->params[0]);
 			$res = $this->responseHandler->handleInfoMessage('User deleted.', 200);
 		} catch (Exception $e) {
 			Exceptions::throwing(__CLASS__, __FUNCTION__, $e);

@@ -7,7 +7,7 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2012/11/15
-* @version 1.16.1103
+* @version 1.16.1110
 * @license SaSeed\license.txt
 */
 
@@ -22,7 +22,20 @@ require_once("autoload.php");
 
 use SaSeed\Handlers\Requests;
 
-$controller = "\Application\Controller\\".Requests::getController();
-$actionMethod =  Requests::getActionFunction();
-$obj = new $controller;
-$obj->$actionMethod();
+function init()
+{
+    $controller = '\Application\Controller\\'.Requests::getController();
+    if (class_exists($controller)) {
+        $obj = new $controller(Requests::getParams());
+        $actionMethod = Requests::getActionFunction();
+        if (!empty($actionMethod) && method_exists($obj, $actionMethod)) {
+            $obj->$actionMethod();
+            return;
+        }
+        throw New \Exception ("[SaSeed::bootstrap] - Required method is empty or does not exist in Controller.".PHP_EOL);
+        return;
+    }
+    throw New \Exception ("[SaSeed::bootstrap] - Required Controller does not exist.".PHP_EOL);
+}
+
+init();
