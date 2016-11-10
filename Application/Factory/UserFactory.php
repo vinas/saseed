@@ -67,6 +67,26 @@ class UserFactory extends \SaSeed\Database\DAO {
 		}
 	}
 
+	public function listAllOrderByName()
+	{
+		$users = [];
+		try {
+			$this->queryBuilder->from($this->table);
+			$this->queryBuilder->orderBy('name');
+			$users = $this->db->getRows($this->queryBuilder->getQuery());
+			for ($i = 0; $i < count($users); $i++) {
+				$users[$i] = Mapper::populate(
+						new UserModel(),
+						$users[$i]
+					);
+			}
+		} catch (Exception $e) {
+			Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
+		} finally {
+			return $users;
+		}
+	}
+
 	public function saveNew($user)
 	{
 		try {
@@ -107,7 +127,7 @@ class UserFactory extends \SaSeed\Database\DAO {
 					'name',
 					'email'
 				),
-				"id = ".$user->getId()
+				['id', '=', $user->getId()]
 			);
 			$res = true;
 		} catch (Exception $e) {

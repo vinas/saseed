@@ -6,7 +6,7 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2016/10/25
-* @version 1.16.1107
+* @version 1.16.1110
 * @license SaSeed\license.txt
 *
 */
@@ -260,11 +260,35 @@ class QueryBuilder
 				__FUNCTION__,
 				'Error: Invalid where clause. It must be sent as an array: [colName, comparator, value, opt tableAlias].'
 			);
+			return;
 		}
 		Exceptions::throwNew(
 			__CLASS__,
 			__FUNCTION__,
 			'Error: Cannot be the first condition declared. Use method where() instead.'
+		);
+	}
+
+	/**
+	* Defines a field to order by
+	*
+	* @param string
+	* @param string
+	* @return void
+	* @throws new exception
+	*/
+	public function orderBy($column, $alias = false)
+	{
+		if ($column) {
+			$this->query->setOrderBy(
+				($alias) ? $alias.'.'.$column : $column
+			);
+			return;
+		}
+		Exceptions::throwNew(
+			__CLASS__,
+			__FUNCTION__,
+			'Error: No column name received.'
 		);
 	}
 

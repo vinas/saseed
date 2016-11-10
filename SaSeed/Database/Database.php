@@ -8,7 +8,7 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2015/04/16
-* @version 2.16.1107
+* @version 2.16.1110
 * @license SaSeed\license.txt
 *
 * @todo This needs a complete documentation and refactor.
@@ -75,11 +75,14 @@ class Database
 		$sel = $saSeedQuery->getSelect();
 		$from = $saSeedQuery->getFrom();
 		$where = $saSeedQuery->getWhere();
+		$orderBy = $saSeedQuery->getOrderBy();
 		if ($sel && $from && $where) {
 			try {
 				$limit = $saSeedQuery->getLimit();
 				$max = $saSeedQuery->getMax();
 				$query = 'SELECT '.$sel.' FROM '.$from.' WHERE '.$where;
+				if ($orderBy)
+					$query .= ' ORDER BY '.$orderBy;
 				if ($limit) {
 					$query .= ' LIMIT '.$limit;
 					if ($max) {
@@ -131,12 +134,18 @@ class Database
 	* @param string
 	* @param array
 	* @param array
-	* @param string
+	* @param array
 	* @return void
 	*/
 	public function update($table, $values, $fields, $condition)
 	{
-		if (count($fields) == count($values)) {
+		if (
+			count($fields) == count($values)
+			&& is_array($condition)
+			&& !empty($condition[0])
+			&& !empty($condition[1])
+			&& !empty($condition[2])
+		) {
 			$query = 'UPDATE '.$table.' SET ';
 			for ($i = 0; $i < count($fields); $i++) {
 				if ($i != 0) {
@@ -149,11 +158,11 @@ class Database
 					$query .= "'".$values[$i]."'";
 				}
 			}
-			$query .= ' WHERE '.$condition;
+			$query .= ' WHERE '.$condition[0].' '.$condition[1].' '.$condition[2];
 			$this->runQuery($query);
-		} else {
-			Exceptions::throwNew(__CLASS__, __FUNCTION__, 'Error: amount of fields and values informed do not match.');
+			return;
 		}
+		Exceptions::throwNew(__CLASS__, __FUNCTION__, 'Error: Invalid parameters.');
 	}
 
 	/**

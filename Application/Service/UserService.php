@@ -44,7 +44,7 @@ class UserService {
 	{
 		$list = [];
 		try {
-			$list = $this->factory->listAll();
+			$list = $this->factory->listAllOrderByName();
 		} catch (Exception $e) {
 			Exceptions::throwing(__CLASS__, __FUNCTION__, $e);
 		} finally {

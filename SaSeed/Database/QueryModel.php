@@ -6,7 +6,7 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2016/10/27
-* @version 1.16.1107
+* @version 1.16.1110
 * @license SaSeed\license.txt
 *
 */
@@ -18,6 +18,7 @@ class QueryModel
 	private $select = false;
 	private $from = false;
 	private $where = false;
+	private $orderBy = false;
 	private $limit = false;
 	private $max = false;
 
@@ -46,6 +47,15 @@ class QueryModel
 	public function getWhere()
 	{
 		return ($this->where) ? $this->where : '1';
+	}
+
+	public function setOrderBy($orderBy)
+	{
+		$this->orderBy = $orderBy;
+	}
+	public function getOrderBy()
+	{
+		return $this->orderBy;
 	}
 
 	public function setLimit($limit)

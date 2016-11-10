@@ -32,10 +32,10 @@ function init()
             $obj->$actionMethod();
             return;
         }
-        throw New \Exception ("[SaSeed::bootstrap] - Required method is empty or does not exist in Controller.".PHP_EOL);
+        throw New \Exception ("[SaSeed\bootstrap] - Required method is empty or does not exist in Controller.".PHP_EOL);
         return;
     }
-    throw New \Exception ("[SaSeed::bootstrap] - Required Controller does not exist.".PHP_EOL);
+    throw New \Exception ("[SaSeed\bootstrap] - Required Controller is empty or does not exist.".PHP_EOL);
 }
 
 init();
