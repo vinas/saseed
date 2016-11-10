@@ -42,7 +42,7 @@ class QueryBuilder
 	}
 
 	/**
-	* Set manually straight to the query the columns to be selected
+	* Set the columns to be selected manually straight to the query 
 	*
 	* @param string
 	* @return void

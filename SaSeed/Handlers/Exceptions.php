@@ -4,7 +4,7 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2016/09/01
-* @version 1.16.1108
+* @version 1.16.1110
 * @license SaSeed\license.txt
 */
 
@@ -19,6 +19,7 @@ Final class Exceptions
 	* @param string
 	* @param string
 	* @param exception
+	* @throws exception
 	*/
 	public static function throwing($class, $method, $err)
 	{
@@ -31,6 +32,7 @@ Final class Exceptions
 	* @param string
 	* @param string
 	* @param string
+	* @throws new exception
 	*/
 	public static function throwNew($class, $method, $msg)
 	{

@@ -34,6 +34,8 @@ class Database
 	* @param string
 	* @param string
 	* @param string
+	* @return mixed
+	* @throws PDOException
 	*/
 	public function connect($driver, $host, $dbName, $user, $pass, $charset = 'utf8')
 	{
@@ -49,6 +51,8 @@ class Database
 
 	/**
 	* Closes a Database connection
+	*
+	* @return void
 	*/
 	public function close()
 	{
@@ -58,7 +62,7 @@ class Database
 	/**
 	* Returns last inserted id
 	*
-	* @return string
+	* @return integer
 	*/
 	public function lastId() {
 		return $this->connection->lastInsertId();
@@ -69,6 +73,7 @@ class Database
 	*
 	* @param object
 	* @return array
+	* @throws Exception
 	*/
 	public function getRows($saSeedQuery)
 	{
@@ -108,6 +113,7 @@ class Database
 	*
 	* @param object
 	* @return array
+	* @throws Exception
 	*/
 	public function getRow($saSeedQuery)
 	{
@@ -136,6 +142,7 @@ class Database
 	* @param array
 	* @param array
 	* @return void
+	* @throws Exception
 	*/
 	public function update($table, $values, $fields, $condition)
 	{
@@ -170,6 +177,7 @@ class Database
 	*
 	* @param string
 	* @param array
+	* @throws Exception
 	*/
 	public function deleteRow($table, $condition = false)
 	{
@@ -187,6 +195,7 @@ class Database
 	* @param array
 	* @param array
 	* @return void
+	* @throws Exception
 	*/
 	public function insertRow($table, $values, $fields = false)
 	{
@@ -316,6 +325,9 @@ class Database
 	* Runs a Query
 	*
 	* @param string
+	* @return result set
+	* @throws PDOException
+	* @throws Exception
 	*/
 	private function runQuery($query)
 	{
@@ -338,6 +350,7 @@ class Database
 	* @param result set
 	* @param string
 	* @return array
+	* @throws PDOException
 	*/
 	private function fetch($stmt, $mode)
 	{
