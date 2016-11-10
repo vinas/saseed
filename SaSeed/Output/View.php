@@ -9,7 +9,7 @@
 * @author Leandro Menezes
 * @author Raphael Pawlik
 * @since 2012/11/14
-* @version 1.16.1108
+* @version 1.16.1110
 * @license SaSeed\license.txt
 */
 
@@ -41,20 +41,20 @@ Final class View extends \SaSeed\Handlers\Files
 				extract(self::$data);
 				require self::getTemplate($name);
 				ob_end_flush();
-			} else {
-				Exceptions::throwNew(
-					__CLASS__,
-					__FUNCTION__,
-					'Template file not found.'
-				);
+				return;
 			}
-		} else {
 			Exceptions::throwNew(
 				__CLASS__,
 				__FUNCTION__,
-				'Template file not informed.'
+				'Template file not found.'
 			);
+			return;
 		}
+		Exceptions::throwNew(
+			__CLASS__,
+			__FUNCTION__,
+			'Template file not informed.'
+		);
 	}
 
 	/**
@@ -63,11 +63,10 @@ Final class View extends \SaSeed\Handlers\Files
 	* @param string
 	* @param string
 	*/
-	public static function set($name, $value = false)
+	public static function set($name = false, $value = false)
 	{
-		if ($name) {
+		if ($name)
 			self::$data[$name] = $value;
-		}
 	}
 
 	/**
@@ -88,25 +87,26 @@ Final class View extends \SaSeed\Handlers\Files
 	{
 		try {
 			ob_start();
-			extract(self::$data);
 			if (self::templateFileExists($name)) {
+				extract(self::$data);
 				require self::getTemplate($name);
-			} else {
-				Exceptions::throwNew(
-					__CLASS__,
-					__FUNCTION__,
-					'Template file not found'
-				);
+				$return	= ob_get_contents();
+				ob_end_clean();
+				return $return;
 			}
-			$return	= ob_get_contents();
-			ob_end_clean();
-			return $return;
+			Exceptions::throwNew(
+				__CLASS__,
+				__FUNCTION__,
+				'Template file not found'
+			);
+			return false;
 		} catch (Exception $e) {
 			Exceptions::throwNew(
 				__CLASS__,
 				__FUNCTION__,
 				'Not possible to render: '.$e->getMessage()
 			);
+			return false;
 		}
 	}
 
@@ -129,17 +129,25 @@ Final class View extends \SaSeed\Handlers\Files
 	public static function redirect($name = false, $full = false)
 	{
 		if ($name) {
-			if (!$full) {
-				$name = parent::setFilePath($name);
-			}
-			header("Location: {$name}");
+			header('Location: '.(!$full) ? parent::setFilePath($name) : $name);
+			return;
 		}
+		Exceptions::throwNew(
+			__CLASS__,
+			__FUNCTION__,
+			'No destination URL given.'
+		);
 	}
 
 	/**
 	* Prints an array encoded in Json
 	*
 	* @param mixed
+	*
+	* @deprecated
+	* @deprecated 1.16.11+
+	* @deprecated There is a specific class to deal
+	* @deprecated with JSON: SaSeed\Output\RestView.
 	*/
 	public static function renderJson($data) 
 	{
@@ -163,9 +171,8 @@ Final class View extends \SaSeed\Handlers\Files
 	*/
 	private static function templateFileExists($name)
 	{
-		if (file_exists(self::getTemplate($name))) {
+		if (file_exists(self::getTemplate($name)))
 			return true;
-		}
 		return false;
 	}
 
@@ -176,10 +183,13 @@ Final class View extends \SaSeed\Handlers\Files
 	*/
 	private static function getTemplate($name = false)
 	{
-		if ($name) {
-			$name	= parent::setFilePath($name);
-			return TemplatesPath."{$name}.html" ;
-		}
+		if ($name)
+			return TemplatesPath . parent::setFilePath($name) . '.html';
+		Exceptions::throwNew(
+			__CLASS__,
+			__FUNCTION__,
+			'No template given.'
+		);
 		return false;
 	}
 
