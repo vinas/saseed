@@ -6,7 +6,7 @@
 *
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @since 2016/10/25
-* @version 1.16.1110
+* @version 1.16.1111
 * @license SaSeed\license.txt
 *
 */
@@ -50,7 +50,7 @@ class QueryBuilder
 	*/
 	public function rawSelect($select = false)
 	{
-		if (isRawInputValid($select)) {
+		if ($this->isRawInputValid($select)) {
 			$this->query->setSelect($select);
 			return;
 		}
@@ -70,7 +70,7 @@ class QueryBuilder
 	*/
 	public function rawFrom($from = false)
 	{
-		if (isRawInputValid($from)){
+		if ($this->isRawInputValid($from)){
 			$this->query->setFrom($from);
 			return;
 		}
@@ -90,7 +90,7 @@ class QueryBuilder
 	*/
 	public function rawWhere($where = false)
 	{
-		if (isRawInputValid($where)) {
+		if ($this->isRawInputValid($where)) {
 			$this->query->setWhere($where);
 			return;
 		}
