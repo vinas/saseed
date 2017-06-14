@@ -9,7 +9,7 @@
 * @author Vinas de Andrade <vinas.andrade@gmail.com>
 * @author Leandro Menezes
 * @since 2012/11/14
-* @version 1.16.1103
+* @version 1.17.0607
 * @license SaSeed\license.txt
 */
 
@@ -98,7 +98,7 @@ Final class Requests
 	*/
 	private static function getPostParams()
 	{
-		return $_POST;
+		return (count($_POST) > 0) ? $_POST : json_decode(file_get_contents('php://input'), true);
 	}
 
 	/**
